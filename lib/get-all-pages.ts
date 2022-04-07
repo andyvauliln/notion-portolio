@@ -3,12 +3,14 @@ import { getAllPagesInSpace } from 'notion-utils'
 
 import * as types from './types'
 import { includeNotionIdInUrls } from './config'
-import { notion } from './notion'
+import { notion } from './notion-api'
 import { getCanonicalPageId } from './get-canonical-page-id'
 
 const uuid = !!includeNotionIdInUrls
 
-export const getAllPages = pMemoize(getAllPagesImpl, { maxAge: 60000 * 5 })
+export const getAllPages = pMemoize(getAllPagesImpl, {
+  cacheKey: (...args) => JSON.stringify(args)
+})
 
 export async function getAllPagesImpl(
   rootNotionPageId: string,
