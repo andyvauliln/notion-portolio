@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React from 'react'
+import * as React from 'react'
 
 import * as types from 'lib/types'
 import * as config from 'lib/config'
@@ -13,6 +13,8 @@ export const PageHead: React.FC<
     url?: string
   }
 > = ({ site, title, description, pageId, image, url }) => {
+  const rssFeedUrl = `${config.host}/feed`
+
   title = title ?? site?.name
   description = description ?? site?.description
 
@@ -27,7 +29,7 @@ export const PageHead: React.FC<
         content='width=device-width, initial-scale=1, shrink-to-fit=no'
       />
 
-      <meta name='theme-color' content='#EB625A' />
+      <meta name='robots' content='index,follow' />
       <meta property='og:type' content='website' />
 
       {site && (
@@ -66,6 +68,13 @@ export const PageHead: React.FC<
           <meta property='twitter:url' content={url} />
         </>
       )}
+
+      <link
+        rel='alternate'
+        type='application/rss+xml'
+        href={rssFeedUrl}
+        title={site?.name}
+      />
 
       <meta property='og:title' content={title} />
       <meta name='twitter:title' content={title} />
