@@ -10,12 +10,12 @@ export default siteConfig({
   rootNotionSpaceId: null,
 
   // basic site info (required)
-  name: 'Next.js Notion Starter Kit',
-  domain: 'nextjs-notion-starter-kit.transitivebullsh.it',
-  author: 'Travis Fischer',
+  name: 'DuniaKripto',
+  domain: 'dunuakripto.com',
+  author: 'Andrei Vaulin',
 
   // open graph metadata (optional)
-  description: 'Example Next.js Notion Starter Kit Site',
+  description: 'Indonesian Crypto News Portal',
 
   // social usernames (optional)
   twitter: 'transitive_bs',
