@@ -28,8 +28,10 @@ import { Page404 } from './Page404'
 import { PageHead } from './PageHead'
 import { PageAside } from './PageAside'
 import { Footer } from './Footer'
+import { PageFooter } from './PageFooter'
 import { NotionPageHeader } from './NotionPageHeader'
-import { GitHubShareButton } from './GitHubShareButton'
+import { PageHeader } from './PageHeader'
+//import { GitHubShareButton } from './GitHubShareButton'
 
 import styles from './styles.module.css'
 
@@ -151,8 +153,9 @@ export const NotionPage: React.FC<types.PageProps> = ({
   site,
   recordMap,
   error,
-  pageId
+  pageId,
 }) => {
+  
   const router = useRouter()
   const lite = useSearchParam('lite')
 
@@ -204,8 +207,20 @@ export const NotionPage: React.FC<types.PageProps> = ({
     ),
     [block, recordMap, isBlogPost]
   )
-
+  //to do move to server
+  if(site && site.rootNotionPageId === pageId){
+    Object.keys(recordMap.collection_query).forEach((r) => {
+      console.log(Object.keys(recordMap.collection_query[r]))
+      Object.keys(recordMap.collection_query[r]).forEach((item) => {
+        console.log(recordMap.collection_query[r][item].collection_group_results)
+        recordMap.collection_query[r][item].collection_group_results.blockIds = recordMap.collection_query[r][item].collection_group_results.blockIds.slice(0, 3)
+      });
+    });
+  }
+  
   const footer = React.useMemo(() => <Footer />, [])
+  const pageFooter = site && site.rootNotionPageId !== pageId && pageId !== "c9ef46dbb6fb4e9b86969d1164bce8e9"  ? null :  <PageFooter />
+  const pageHeader = React.useMemo(() => <PageHeader />, [])
 
   if (router.isFallback) {
     return <Loading />
@@ -273,7 +288,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
         rootDomain={site.domain}
         fullPage={!isLiteMode}
         previewImages={!!recordMap.preview_images}
-        showCollectionViewDropdown={false}
+        showCollectionViewDropdown={true}
         showTableOfContents={showTableOfContents}
         minTableOfContentsItems={minTableOfContentsItems}
         defaultPageIcon={config.defaultPageIcon}
@@ -284,9 +299,11 @@ export const NotionPage: React.FC<types.PageProps> = ({
         searchNotion={config.isSearchEnabled ? searchNotion : null}
         pageAside={pageAside}
         footer={footer}
+        pageFooter={pageFooter}
+        pageHeader={pageHeader}
       />
 
-      <GitHubShareButton />
+      {/* <GitHubShareButton /> */}
     </>
   )
 }

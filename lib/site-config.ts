@@ -11,9 +11,9 @@ export interface SiteConfig {
   language?: string
 
   twitter?: string
-  github?: string
-  linkedin?: string
-  zhihu?: string
+  instagram?: string
+  telegramChannel?: string
+  telegramChat?: string
 
   defaultPageIcon?: string | null
   defaultPageCover?: string | null

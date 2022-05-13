@@ -54,10 +54,9 @@ export const description: string = getSiteConfig('description', 'Notion Blog')
 export const language: string = getSiteConfig('language', 'en')
 
 // social accounts
-export const twitter: string | null = getSiteConfig('twitter', null)
-export const github: string | null = getSiteConfig('github', null)
-export const linkedin: string | null = getSiteConfig('linkedin', null)
-export const zhihu: string | null = getSiteConfig('zhihu', null)
+export const instagram: string | null = getSiteConfig('instagram', null)
+export const telegramChannel: string | null = getSiteConfig('telegramChannel', null)
+export const telegramChat: string | null = getSiteConfig('telegramChat', null)
 
 // default notion values for site-wide consistency (optional; may be overridden on a per-page basis)
 export const defaultPageIcon: string | null = getSiteConfig(

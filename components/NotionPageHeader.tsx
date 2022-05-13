@@ -2,8 +2,9 @@ import * as React from 'react'
 import cs from 'classnames'
 import { IoSunnyOutline } from '@react-icons/all-files/io5/IoSunnyOutline'
 import { IoMoonSharp } from '@react-icons/all-files/io5/IoMoonSharp'
-import { Header, Breadcrumbs, Search, useNotionContext } from 'react-notion-x'
+import { Header, Search, useNotionContext } from 'react-notion-x'
 import * as types from 'notion-types'
+import Logo from './Logo'
 
 import { useDarkMode } from 'lib/use-dark-mode'
 import { navigationStyle, navigationLinks, isSearchEnabled } from 'lib/config'
@@ -27,7 +28,7 @@ const ToggleThemeButton = () => {
       className={cs('breadcrumb', 'button', !hasMounted && styles.hidden)}
       onClick={onToggleTheme}
     >
-      {hasMounted && isDarkMode ? <IoMoonSharp /> : <IoSunnyOutline />}
+      {hasMounted && isDarkMode ? <IoMoonSharp size={21} /> : <IoSunnyOutline size={21} />}
     </div>
   )
 }
@@ -40,13 +41,53 @@ export const NotionPageHeader: React.FC<{
   if (navigationStyle === 'default') {
     return <Header block={block} />
   }
-
+  console.log("isSearchEnabled", isSearchEnabled)
   return (
-    <header className='notion-header'>
-      <div className='notion-nav-header'>
-        <Breadcrumbs block={block} rootOnly={true} />
+    <React.Fragment>
+      <header className='notion-header'>
+        <div className='notion-nav-header'>
+          {/* <Breadcrumbs block={block} rootOnly={true} /> */}
+          <Logo />
 
-        <div className='notion-nav-header-rhs breadcrumbs'>
+          <div className='notion-nav-header-rhs breadcrumbs'>
+            {navigationLinks
+              ?.map((link, index) => {
+                if (!link.pageId && !link.url) {
+                  return null
+                }
+
+                if (link.pageId) {
+                  return (
+                    <components.PageLink
+                      href={mapPageUrl(link.pageId)}
+                      key={index}
+                      className={cs(styles.navLink, 'breadcrumb', 'button')}
+                    >
+                      {link.title}
+                    </components.PageLink>
+                  )
+                } else {
+                  return (
+                    <components.Link
+                      href={link.url}
+                      key={index}
+                      className={cs(styles.navLink, 'breadcrumb', 'button')}
+                    >
+                      {link.title}
+                    </components.Link>
+                  )
+                }
+              })
+              .filter(Boolean)}
+            <div style={{ borderLeft: " 1px solid var(--divider-color)", height: "60%", marginRight: "0.5em", marginLeft: "0.5em" }}></div>
+            <ToggleThemeButton />
+
+            {isSearchEnabled && <Search block={block} title={null} />}
+          </div>
+        </div>
+      </header>
+      <div className='notion-subheader'>
+        <div className='notion-nav-header-sub breadcrumbs'>
           {navigationLinks
             ?.map((link, index) => {
               if (!link.pageId && !link.url) {
@@ -76,12 +117,8 @@ export const NotionPageHeader: React.FC<{
               }
             })
             .filter(Boolean)}
-
-          <ToggleThemeButton />
-
-          {isSearchEnabled && <Search block={block} title={null} />}
         </div>
       </div>
-    </header>
+    </React.Fragment>
   )
 }
