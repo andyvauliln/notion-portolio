@@ -51,6 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
         posthog.capture('$pageview')
       }
     }
+    
 
     if (fathomId) {
       Fathom.load(fathomId, fathomConfig)
