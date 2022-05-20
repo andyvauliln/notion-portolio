@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { useSearchParam } from 'react-use'
 import BodyClassName from 'react-body-classname'
 import { PageBlock } from 'notion-types'
-import { LinkPreview } from '@dhaiwat10/react-link-preview';
+// import { LinkPreview } from '@dhaiwat10/react-link-preview';
 import TweetEmbed from 'react-tweet-embed'
 
 // core notion renderer
@@ -148,7 +148,7 @@ const propertyTextValue = (
 
   return defaultFn()
 }
-const PreviewLink = <LinkPreview>{Link}</LinkPreview>
+// const PreviewLink = <LinkPreview>{Link}</LinkPreview>
 
 export const NotionPage: React.FC<types.PageProps> = ({
   site,
@@ -163,7 +163,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
   const components = React.useMemo(
     () => ({
       nextImage: Image,
-      nextLink: LinkPreview,
+      nextLink: Link,
       Code,
       Collection,
       Equation,
