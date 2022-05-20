@@ -40,11 +40,15 @@ export default siteConfig({
   // any pages defined here will override their default URL paths
   // example:
   //
-  // pageUrlOverrides: {
-  //   '/foo': '067dd719a912471ea9a3ac10710e7fdf',
-  //   '/bar': '0be6efce9daf42688f65c76b89f8eb27'
-  // }
-  pageUrlOverrides: null,
+  pageUrlOverrides: {
+    '/news-page': 'b0883aee906e4b7ea23d94bd6bf77dd8',
+    '/education-page': '83143e47f6c5444190d68cfafe9de2af',
+    '/exclusive-page': 'd6602ada9a10493298b65ddc4079a26d',
+    '/events-page': 'cf91485acaac4c51a06597eb1084461f',
+    '/jobs-page': 'f225ef03dfcb4b9897494ed3ef81100d',
+    '/instruments-page': '37fffde2a6f44a3aa5cb12ec95ae44dd',
+    '/duniakripto-page': 'c9ef46dbb6fb4e9b86969d1164bce8e9',
+  },
 
   // whether to use the default notion navigation style or a custom one with links to
   // important pages
@@ -57,7 +61,7 @@ export default siteConfig({
     },
     {
       title: 'News',
-      pageId: 'Last-News-Page-b0883aee906e4b7ea23d94bd6bf77dd8'
+      pageId: 'b0883aee906e4b7ea23d94bd6bf77dd8'
     },
     {
       title: 'Education',
@@ -65,23 +69,23 @@ export default siteConfig({
     },
     {
       title: 'Exclusive',
-      pageId: 'Exclusive-Page-d6602ada9a10493298b65ddc4079a26d'
+      pageId: 'd6602ada9a10493298b65ddc4079a26d'
     },
     {
       title: 'Events',
-      pageId: 'Events-Page-cf91485acaac4c51a06597eb1084461f'
+      pageId: 'cf91485acaac4c51a06597eb1084461f'
     },
     {
       title: 'Jobs',
-      pageId: 'Jobs-f225ef03dfcb4b9897494ed3ef81100d'
+      pageId: 'f225ef03dfcb4b9897494ed3ef81100d'
     },
     {
       title: 'Instruments',
-      pageId: 'Data-Page-37fffde2a6f44a3aa5cb12ec95ae44dd'
+      pageId: '37fffde2a6f44a3aa5cb12ec95ae44dd'
     },
     {
       title: 'Duniakripto',
-      pageId: 'DuniaKripto-Page-c9ef46dbb6fb4e9b86969d1164bce8e9'
+      pageId: 'c9ef46dbb6fb4e9b86969d1164bce8e9'
     },
   ]
 })
