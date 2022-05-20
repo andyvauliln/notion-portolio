@@ -41,7 +41,6 @@ export const NotionPageHeader: React.FC<{
   if (navigationStyle === 'default') {
     return <Header block={block} />
   }
-  console.log("isSearchEnabled", isSearchEnabled)
   return (
     <React.Fragment>
       <header className='notion-header'>

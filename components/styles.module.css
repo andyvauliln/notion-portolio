@@ -238,6 +238,7 @@
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -339,3 +340,25 @@
     width: calc((100vw + var(--notion-max-width)) / 2);
   }
 } */
+
+.logoWrapper {
+  position: relative;
+  left: 30px;
+
+
+}
+
+.dunia {
+  fill: var(--fg-color)
+}
+
+.logoText {
+  position: absolute;
+  top: 14px;
+  z-index: 100;
+  left: -39%;
+  font-weight: bolder;
+  font-size: 10px;
+  width: 76px;
+}
+

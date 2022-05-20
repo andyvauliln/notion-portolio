@@ -64,12 +64,20 @@ export default siteConfig({
       pageId: '83143e47f6c5444190d68cfafe9de2af'
     },
     {
+      title: 'Exclusive',
+      pageId: 'Exclusive-Page-d6602ada9a10493298b65ddc4079a26d'
+    },
+    {
       title: 'Events',
       pageId: 'Events-Page-cf91485acaac4c51a06597eb1084461f'
     },
     {
-      title: 'Spec Projects',
-      pageId: '753836f2d81e42d49bcd2357d6343cfa'
+      title: 'Jobs',
+      pageId: 'Jobs-f225ef03dfcb4b9897494ed3ef81100d'
+    },
+    {
+      title: 'Instruments',
+      pageId: 'Data-Page-37fffde2a6f44a3aa5cb12ec95ae44dd'
     },
     {
       title: 'Duniakripto',

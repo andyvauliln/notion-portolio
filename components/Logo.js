@@ -1,11 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styles from './styles.module.css'
 
 export default function Logo() {
 	return (
-		<Wrapper>
-			<TextWrapper>DUNIA KRIPTO</TextWrapper>
-			<svg xmlns="http://www.w3.org/2000/svg" className='dunia' height="30pt" viewBox="0 -1 480.00011 480" width="30pt">
+		<div className={styles.logoWrapper}>
+			<div className={styles.logoText}>DUNIA KRIPTO</div>
+			<svg xmlns="http://www.w3.org/2000/svg" className={styles.dunia} height="30pt" viewBox="0 -1 480.00011 480" width="30pt">
 				<path d="m297.601562 71.28125c-15.792968-26.324219-35.179687-50.3125-57.601562-71.28125-22.421875 20.96875-41.808594 44.957031-57.601562 71.28125zm0 0" />
 				<path d="m173.488281 87.28125c-10.710937 20.371094-19.222656 41.828125-25.398437 64h183.820312c-6.175781-22.171875-14.6875-43.628906-25.398437-64zm0 0" />
 				<path d="m348.542969 151.28125h114.722656c-9.136719-23.15625-21.824219-44.746094-37.601563-64h-101.175781c10.140625 20.472656 18.199219 41.914062 24.054688 64zm0 0" />
@@ -19,23 +19,6 @@ export default function Logo() {
 				<path d="m306.511719 391.28125c10.710937-20.375 19.222656-41.828125 25.398437-64h-183.820312c6.175781 22.171875 14.6875 43.625 25.398437 64zm0 0" />
 				<path d="m182.398438 407.28125c15.792968 26.320312 35.179687 50.3125 57.601562 71.277344 22.421875-20.964844 41.808594-44.957032 57.601562-71.277344zm0 0" />
 			</svg>
-		</Wrapper>
+		</div>
 	);
 }
-const Wrapper = styled.div`
-	position: relative;
-    left: 30px;
-
-    .dunia {
-        fill:var(--fg-color)
-    }
-`;
-const TextWrapper = styled.div`
-	position: absolute;
-    top: 29%;
-    z-index: 100;
-    left: -47%;
-    font-weight: bolder;
-    font-size: 10px;
-    width: 90px;
-`;

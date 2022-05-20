@@ -75,6 +75,11 @@
   
 }
 
+.notion-page-scroller {
+  padding-bottom: 84px;
+
+}
+
 .notion-block-cf91485acaac4c51a06597eb1084461f {
 
 
@@ -414,6 +419,7 @@
 
 .notion-page-cover-wrapper {
   margin-top: 5em;
+
 }
 
 /* if you don't want rounded page icon images, remove this */
@@ -530,4 +536,7 @@
 
 .notion-subheader .button {
   padding: 12px;
+}
+input {
+  color: var(--fg-color) ;
 }
