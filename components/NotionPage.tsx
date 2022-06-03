@@ -213,7 +213,7 @@ export const NotionPage: React.FC<types.PageProps> = ({
   // tooltips
   React.useEffect(() => {
     const onPageLoad = () => {
-      Array.from(document.querySelectorAll('[data-tip]')).forEach((el) => {
+      Array.from(document.querySelectorAll<HTMLElement>('[data-tip]')).forEach((el) => {
         if (el.querySelectorAll('.tooltip').length === 0) {
           const tip = document.createElement('div');
           tip.classList.add('tooltip');
