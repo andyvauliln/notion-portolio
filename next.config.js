@@ -7,7 +7,7 @@ module.exports = withBundleAnalyzer({
   typescript: {
     ignoreBuildErrors: true
   },
-  staticPageGenerationTimeout: 300,
+  staticPageGenerationTimeout: 1000,
   skipTypescriptChecking: true,
   images: {
     domains: [
