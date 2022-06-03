@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as types from 'notion-types'
 import throttle from 'lodash.throttle'
-import { getBlockTitle, getBlockParentPage } from 'notion-utils'
 import { searchNotionCollection } from 'lib/search-notion'
 import { NotionContextConsumer, LoadingIcon, ClearIcon, SearchIcon, Checkbox } from 'react-notion-x'
 import { GiNewspaper } from "@react-icons/all-files/gi/GiNewspaper";
