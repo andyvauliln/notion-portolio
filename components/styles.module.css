@@ -200,6 +200,7 @@
 
 .flexRow {
   display: flex;
+  align-items: center;
   /* width: 100%;
   height: 100%; */
   position: relative;
@@ -228,12 +229,12 @@
 
 .footer {
   width: 100%;
-  max-width: 1100px;
   margin: auto auto 0;
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 20px;
   border-top: 1px solid var(--divider-color);
+  box-shadow: inset 0 1px 15px 0px rgb(0 0 0 / 10%);
   position: fixed;
   right: 0;
   bottom: 0;
@@ -245,7 +246,7 @@
   align-items: center;
   background: var(--bg-color);
   min-width: 320px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .footerRow1 {
@@ -256,6 +257,7 @@
 
 .footerRow2 {
   display: flex;
+  max-width: 1100px;
   width: 100%;
 }
 
@@ -272,7 +274,7 @@
   max-width: 450px;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1020px) {
 
   .footerRow2 {
     flex-direction: column !important;
@@ -280,21 +282,22 @@
     align-items: center;
     width: 100vw;
   }
+  .mobileNav{
+    display: flex !important;
+    justify-content: space-between;
+  }
+  .mobileNav svg:hover{
+    color: #2795e9;
+    
+  }
 
   .settings {
     display: none;
   }
 
   .copyright {
-    margin-top: 0.5em;
-    margin-bottom: 1em;
+    display: none;
   }
-
-  .social {
-
-    /* border-bottom: 1px solid var(--divider-color); */
-  }
-
   .cryptoWallets {
     flex-direction: column;
   }
@@ -319,27 +322,18 @@
   }
 }
 
-@media only screen and (max-width: 380px) {
 
-  .socialtext {
+@media only screen and (max-width: 480px) {
+  .mobileNav a{
+    margin-right: 1em !important;
+   }
+   .mobileNav a:last-of-type {
+    margin-right: 0 !important;
+  }
+   .socialtext {
     font-size: 10px;
   }
 }
-
-@media only screen and (max-width: 400px) {
-
-  /* .supportSection{
-    font-size: 10px;
-  } */
-}
-
-/* @media (min-width: 1300px) and (min-height: 300px) {
-  .notion-page-content-has-aside {
-    display: flex;
-    flex-direction: row;
-    width: calc((100vw + var(--notion-max-width)) / 2);
-  }
-} */
 
 .logoWrapper {
   position: relative;
@@ -362,3 +356,23 @@
   width: 76px;
 }
 
+ .bookmarksWrapper{
+   border: 1px solid gray;
+ }
+ .mobileNav {
+   display: none;
+   border-bottom: 1px solid gray;
+   padding-bottom: 0.5em;
+   /* padding-right: 1em;
+   padding-left: 1em; */
+ }
+
+ .mobileNav a{
+ margin-right: 2em;
+}
+.mobileNav a:last-of-type {
+  margin-right: 0;
+}
+.notion-to-do-body {
+  font-size: 14px;
+}

@@ -3,7 +3,6 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 const ToggleButton = ({ checked, onClick, ...props }) => {
-  console.log(checked, props, 'lang')
   const id = 'checkbox-' + parseInt(Math.random() * 1000)
   return (
     <Wrapper>

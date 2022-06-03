@@ -4,6 +4,7 @@ import { ExtendedRecordMap, SearchParams, SearchResults } from 'notion-types'
 import { mergeRecordMaps } from 'notion-utils'
 
 import { notion } from './notion-api'
+import { notionhq } from './notion-api2'
 import { getPreviewImageMap } from './preview-images'
 import {
   isPreviewImageSupportEnabled,
@@ -39,7 +40,7 @@ const getNavigationLinkPages = pMemoize(
 
 export async function getPage(pageId: string): Promise<ExtendedRecordMap> {
   let recordMap = await notion.getPage(pageId)
-  
+
   if (navigationStyle !== 'default') {
     // ensure that any pages linked to in the custom navigation header have
     // their block info fully resolved in the page record map so we know
@@ -65,4 +66,29 @@ export async function getPage(pageId: string): Promise<ExtendedRecordMap> {
 
 export async function search(params: SearchParams): Promise<SearchResults> {
   return notion.search(params)
+}
+
+export async function searchInCollection(searchParams) {
+  const response = await pMap(
+    searchParams.database_ids,
+    async (database_id) =>
+      notionhq.client.databases.query({
+        database_id: database_id,
+        filter:searchParams.filter
+      }),
+    {
+      concurrency: 4
+    }
+  )
+  const res = []
+  
+  if (response?.length) {
+   response.forEach(r=>{
+      r.results.forEach(element => {
+        res.push(element)
+      });
+    })
+  }
+  
+  return res
 }

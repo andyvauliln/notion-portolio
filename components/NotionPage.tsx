@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { useSearchParam } from 'react-use'
 import BodyClassName from 'react-body-classname'
 import { PageBlock } from 'notion-types'
-// import { LinkPreview } from '@dhaiwat10/react-link-preview';
 import TweetEmbed from 'react-tweet-embed'
 
 // core notion renderer
@@ -26,7 +25,7 @@ import * as config from 'lib/config'
 import { Loading } from './Loading'
 import { Page404 } from './Page404'
 import { PageHead } from './PageHead'
-import { PageAside } from './PageAside'
+//import { PageAside } from './PageAside'
 import { Footer } from './Footer'
 import { PageFooter } from './PageFooter'
 import { NotionPageHeader } from './NotionPageHeader'
@@ -34,6 +33,7 @@ import { PageHeader } from './PageHeader'
 //import { GitHubShareButton } from './GitHubShareButton'
 
 import styles from './styles.module.css'
+import useBookmarks from 'lib/useBookmarks'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -103,7 +103,6 @@ const Modal = dynamic(
     ssr: false
   }
 )
-
 const Tweet = ({ id }: { id: string }) => {
   return <TweetEmbed tweetId={id} />
 }
@@ -148,7 +147,6 @@ const propertyTextValue = (
 
   return defaultFn()
 }
-// const PreviewLink = <LinkPreview>{Link}</LinkPreview>
 
 export const NotionPage: React.FC<types.PageProps> = ({
   site,
@@ -156,9 +154,43 @@ export const NotionPage: React.FC<types.PageProps> = ({
   error,
   pageId,
 }) => {
-  
+
   const router = useRouter()
+  const bookmarks = useBookmarks()
   const lite = useSearchParam('lite')
+
+  //bookmarks page
+  if (pageId && pageId.replaceAll('-', '') === "9bff14071eeb4da3a51fa9a07b47eb55") {
+    bookmarks.data.forEach(bookmark => {
+      recordMap.block[bookmark.id] = { role: "reader", value: bookmark }
+    })
+
+    Object.values(recordMap.collection_query).forEach((col) => {
+      Object.keys(col).forEach((key) => {
+        const val = col[key];
+
+        if (key === "edf96bcc-a919-40b5-bcd3-4b26414a2039") { // favorite
+          val.collection_group_results.blockIds = bookmarks.data.filter(r => r.bookmarkType === 'favorite').map(r => r.id);
+        }
+        if (key === "8d3fcfa7-18ad-45fb-8226-441f7216d268") { //bookmarks
+          val.collection_group_results.blockIds = bookmarks.data.filter(r => r.bookmarkType === 'bookmark').map(r => r.id);
+        }
+        if (key === "e9495047-d8cc-4689-90b5-4c4f8b31fd0f") { // by category
+          Object.keys(val).filter(key => key.indexOf('result') > -1).forEach(prop => {
+            val[prop].blockIds = bookmarks.data.filter(bf => bf.Category && bf.Category.toLowerCase().indexOf(prop.split(":")[2].toLowerCase()) > -1).map(br => br.id)
+          })
+        }
+        if (key === "4f2f23ca-e1b9-4a4d-b965-cabec17daca2") { // by domain
+
+          Object.keys(val).filter(key => key.indexOf('result') > -1).forEach(prop => {
+            val[prop].blockIds = bookmarks.data
+              .filter(bf => bf.Domain && bf.Domain.toLowerCase().indexOf(prop.split(":")[2].toLowerCase()) > -1)
+              .map(br => br.id)
+          })
+        }
+      })
+    })
+  }
 
   const components = React.useMemo(
     () => ({
@@ -178,6 +210,43 @@ export const NotionPage: React.FC<types.PageProps> = ({
     []
   )
 
+  // tooltips
+  React.useEffect(() => {
+    const onPageLoad = () => {
+      Array.from(document.querySelectorAll('[data-tip]')).forEach((el) => {
+        if (el.querySelectorAll('.tooltip').length === 0) {
+          const tip = document.createElement('div');
+          tip.classList.add('tooltip');
+          tip.innerHTML += `<div class='tooltip-header notion-text'>Preview</div>
+                           <div class='tooltip-body'>
+                            ${el.getAttribute('data-tip')}
+                            <div class=''>...</div>
+                           </div>
+                           <div class='tooltip-footer notion-text'>Click to Read More</div>`
+          el.appendChild(tip);
+          el.onmousemove = e => {
+            tip.style.left = e.clientX + 'px'
+            tip.style.top = e.clientY + 'px';
+  
+            if (e.clientX > window.innerWidth / 2) {
+              tip.style.transform = `translate(calc(-100% - 15px), ${e.clientY > window.innerHeight / 2 ? "calc(-100% - 15px)" : "15px"})`;
+            }
+            else {
+              tip.style.transform = `translate(15px,${e.clientY > window.innerHeight / 2 ? "calc(-100% - 15px)" : "15px"})`;
+            }
+          };
+        }
+
+      });
+    };
+    setTimeout(onPageLoad, 1000)
+    return () => {
+      Array.from(document.querySelectorAll('.tooltip')).forEach(el => {
+        el.remove()
+      })
+    }
+  }, [router.isFallback, pageId])
+
   // lite mode is for oembed
   const isLiteMode = lite === 'true'
 
@@ -196,31 +265,22 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   // const isRootPage =
   //   parsePageId(block?.id) === parsePageId(site?.rootNotionPageId)
-  const isBlogPost =
-    block?.type === 'page' && block?.parent_table === 'collection'
+  // const isBlogPost =
+  //   block?.type === 'page' && block?.parent_table === 'collection'
 
-  const showTableOfContents = !!isBlogPost
-  const minTableOfContentsItems = 3
+  // const showTableOfContents = !!isBlogPost
+  // const minTableOfContentsItems = 3
 
-  const pageAside = React.useMemo(
-    () => (
-      <PageAside block={block} recordMap={recordMap} isBlogPost={isBlogPost} />
-    ),
-    [block, recordMap, isBlogPost]
-  )
-  //to do move to server
-  if(site && site.rootNotionPageId === pageId){
-    Object.keys(recordMap.collection_query).forEach((r) => {
-      console.log(Object.keys(recordMap.collection_query[r]))
-      Object.keys(recordMap.collection_query[r]).forEach((item) => {
-        console.log(recordMap.collection_query[r][item].collection_group_results)
-        recordMap.collection_query[r][item].collection_group_results.blockIds = recordMap.collection_query[r][item].collection_group_results.blockIds.slice(0, 3)
-      });
-    });
-  }
-  
+  // const pageAside = React.useMemo(
+  //   () => (
+  //     <PageAside block={block} recordMap={recordMap} isBlogPost={isBlogPost} />
+  //   ),
+  //   [block, recordMap, isBlogPost]
+  // )
+
+
   const footer = React.useMemo(() => <Footer />, [])
-  const pageFooter = site && site.rootNotionPageId !== pageId && pageId !== "c9ef46dbb6fb4e9b86969d1164bce8e9"  ? null :  <PageFooter />
+  const pageFooter = <PageFooter />
   const pageHeader = React.useMemo(() => <PageHeader />, [])
 
   if (router.isFallback) {
@@ -254,8 +314,8 @@ export const NotionPage: React.FC<types.PageProps> = ({
 
   const socialImage = mapImageUrl(
     getPageProperty<string>('Social Image', block, recordMap) ||
-      (block as PageBlock).format?.page_cover ||
-      config.defaultPageCover,
+    (block as PageBlock).format?.page_cover ||
+    config.defaultPageCover,
     block
   )
 
@@ -290,21 +350,19 @@ export const NotionPage: React.FC<types.PageProps> = ({
         fullPage={!isLiteMode}
         previewImages={!!recordMap.preview_images}
         showCollectionViewDropdown={true}
-        showTableOfContents={showTableOfContents}
-        minTableOfContentsItems={minTableOfContentsItems}
+        // showTableOfContents={showTableOfContents}
+        // minTableOfContentsItems={minTableOfContentsItems}
         defaultPageIcon={config.defaultPageIcon}
         defaultPageCover={config.defaultPageCover}
         defaultPageCoverPosition={config.defaultPageCoverPosition}
         mapPageUrl={siteMapPageUrl}
         mapImageUrl={mapImageUrl}
         searchNotion={config.isSearchEnabled ? searchNotion : null}
-        pageAside={pageAside}
+        // pageAside={pageAside}
         footer={footer}
         pageFooter={pageFooter}
         pageHeader={pageHeader}
       />
-
-      {/* <GitHubShareButton /> */}
     </>
   )
 }

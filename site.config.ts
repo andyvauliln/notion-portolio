@@ -41,13 +41,14 @@ export default siteConfig({
   // example:
   //
   pageUrlOverrides: {
-    '/news-page': 'b0883aee906e4b7ea23d94bd6bf77dd8',
-    '/education-page': '83143e47f6c5444190d68cfafe9de2af',
-    '/exclusive-page': 'd6602ada9a10493298b65ddc4079a26d',
-    '/events-page': 'cf91485acaac4c51a06597eb1084461f',
-    '/jobs-page': 'f225ef03dfcb4b9897494ed3ef81100d',
-    '/instruments-page': '37fffde2a6f44a3aa5cb12ec95ae44dd',
-    '/duniakripto-page': 'c9ef46dbb6fb4e9b86969d1164bce8e9',
+    '/news': 'b0883aee906e4b7ea23d94bd6bf77dd8',
+    '/education': '83143e47f6c5444190d68cfafe9de2af',
+    '/articles': 'd6602ada9a10493298b65ddc4079a26d',
+    '/events': 'cf91485acaac4c51a06597eb1084461f',
+    '/jobs': 'f225ef03dfcb4b9897494ed3ef81100d',
+    '/articles': '37fffde2a6f44a3aa5cb12ec95ae44dd',
+    '/duniakripto': 'c9ef46dbb6fb4e9b86969d1164bce8e9',
+    '/bookmarks': '9bff14071eeb4da3a51fa9a07b47eb55',
   },
 
   // whether to use the default notion navigation style or a custom one with links to
@@ -68,7 +69,7 @@ export default siteConfig({
       pageId: '83143e47f6c5444190d68cfafe9de2af'
     },
     {
-      title: 'Exclusive',
+      title: 'Articles',
       pageId: 'd6602ada9a10493298b65ddc4079a26d'
     },
     {
@@ -80,7 +81,7 @@ export default siteConfig({
       pageId: 'f225ef03dfcb4b9897494ed3ef81100d'
     },
     {
-      title: 'Instruments',
+      title: 'Tools',
       pageId: '37fffde2a6f44a3aa5cb12ec95ae44dd'
     },
     {

@@ -14,7 +14,7 @@ import {
   PageUrlOverridesMap,
   NavigationStyle,
   Site
-} from './types'
+} from './types' 
 
 export const rootNotionPageId: string = parsePageId(
   getSiteConfig('rootNotionPageId'),
@@ -128,6 +128,7 @@ export const apiBaseUrl = `/api`
 
 export const api = {
   searchNotion: `${apiBaseUrl}/search-notion`,
+  searchNotionCollection: `${apiBaseUrl}/search-notion-collection`,
   getSocialImage: `${apiBaseUrl}/social-image`
 }
 

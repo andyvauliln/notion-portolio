@@ -9,7 +9,14 @@ export const getStaticProps = async (context) => {
 
   try {
     const props = await resolveNotionPage(domain, rawPageId)
-
+    //to do move to server
+    if (props.site && props.site.rootNotionPageId === props.pageId) {
+      Object.keys(props.recordMap.collection_query).forEach((r) => {
+        Object.keys(props.recordMap.collection_query[r]).forEach((item) => {
+          props.recordMap.collection_query[r][item].collection_group_results.blockIds = props.recordMap.collection_query[r][item].collection_group_results.blockIds.slice(0, 3)
+        });
+      });
+    }
     return { props, revalidate: 10 }
   } catch (err) {
     console.error('page error', domain, rawPageId, err)
@@ -39,8 +46,6 @@ export async function getStaticPaths() {
     // paths: [],
     fallback: true
   }
-
-  console.log(staticPaths.paths)
   return staticPaths
 }
 

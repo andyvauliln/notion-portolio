@@ -39,3 +39,29 @@ async function searchNotionImpl(
   //   })
   //   .json()
 }
+
+export const searchNotionCollection = pMemoize(searchNotionCollectionImpl, {
+  cacheKey: (args) => args[0]?.query,
+  cache: new ExpiryMap(10000)
+})
+
+async function searchNotionCollectionImpl(params){
+  return fetch(api.searchNotionCollection, {
+    method: 'POST',
+    body: JSON.stringify(params),
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res
+      }
+
+      // convert non-2xx HTTP responses into errors
+      const error: any = new Error(res.statusText)
+      error.response = res
+      return Promise.reject(error)
+    })
+    .then((res) => res.json())
+}
