@@ -4,7 +4,11 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer({
+  typescript: {
+    ignoreBuildErrors: true
+  },
   staticPageGenerationTimeout: 300,
+  skipTypescriptChecking: true,
   images: {
     domains: [
       'www.notion.so',
@@ -13,13 +17,12 @@ module.exports = withBundleAnalyzer({
       'pbs.twimg.com',
       'abs.twimg.com',
       's3.us-west-2.amazonaws.com',
-      'transitivebullsh.it'
+      'transitivebullsh.it',
+      'vercel.app'
     ],
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    typescript: {
-      ignoreBuildErrors: true
-    }
+   
   }
 })

@@ -55,7 +55,8 @@
     "rss": "^1.2.2",
     "notion-client": "^6.12.6",
     "react-notion-x": "^6.12.7",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "prismjs": "^1.27.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.1.0",
