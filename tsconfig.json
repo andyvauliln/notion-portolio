@@ -18,7 +18,9 @@
     "typeRoots": ["./node_modules/@types"],
     "incremental": true,
     "paths": {
-      "/react-notion-x/*": ["react-notion-x"]
+      "/react-notion-x/*": ["react-notion-x"],
+      "/notion-client/*": ["notion-client"],
+      "/notion-utils/*": ["notion-utils"]
     }
   },
   "exclude": ["node_modules"],

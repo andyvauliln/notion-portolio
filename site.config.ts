@@ -46,7 +46,7 @@ export default siteConfig({
     '/articles': 'd6602ada9a10493298b65ddc4079a26d',
     '/events': 'cf91485acaac4c51a06597eb1084461f',
     '/jobs': 'f225ef03dfcb4b9897494ed3ef81100d',
-    '/articles': '37fffde2a6f44a3aa5cb12ec95ae44dd',
+    '/tools': '37fffde2a6f44a3aa5cb12ec95ae44dd',
     '/duniakripto': 'c9ef46dbb6fb4e9b86969d1164bce8e9',
     '/bookmarks': '9bff14071eeb4da3a51fa9a07b47eb55',
   },

@@ -96,7 +96,7 @@ export const Block: React.FC<BlockProps> = (props) => {
   // e.g., 6d886ca87ab94c21a16e3b82b43a57fb
   if (level === 0 && block.type === 'collection_view') {
     ;(block as any).type = 'collection_view_page'
-  }
+  }  
 
   const blockId = hideBlockId
     ? 'notion-block'

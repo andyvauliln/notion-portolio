@@ -105,9 +105,11 @@
   grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)) !important;
   grid-gap: 6vmin !important;
   gap: 2vmin !important;
+  min-height: 300px;
 }
 .notion-collection-card{
   height: 100%;
+ 
 }
 
 .notion-gallery-grid .notion-page-icon-inline {
@@ -640,12 +642,12 @@ input {
   padding-right: 10px;
 }
 .notion-collection-group .notion-gallery-grid{
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .search-tags-box{
-  display: flex;
+    display: flex;
     flex-wrap: wrap;
     grid-gap: 6px;
     gap: 6px;

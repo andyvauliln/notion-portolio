@@ -2,7 +2,11 @@ import * as React from 'react'
 import * as types from 'notion-types'
 import throttle from 'lodash.throttle'
 import { searchNotionCollection } from 'lib/search-notion'
-import { NotionContextConsumer, LoadingIcon, ClearIcon, SearchIcon, Checkbox } from 'react-notion-x'
+import { NotionContextConsumer } from 'react-notion-x'
+import { Checkbox } from 'react-notion-x/components/checkbox'
+import {  LoadingIcon } from 'react-notion-x/icons/loading-icon'
+import { ClearIcon } from 'react-notion-x/icons/clear-icon'
+import { SearchIcon} from 'react-notion-x/icons/search-icon'
 import { GiNewspaper } from "@react-icons/all-files/gi/GiNewspaper";
 import { FaUserGraduate } from "@react-icons/all-files/fa/FaUserGraduate";
 import { GiSecretBook } from "@react-icons/all-files/gi/GiSecretBook";
@@ -130,19 +134,16 @@ export class SearchDialog extends React.Component<{
                           <footer className='resultsFooter'>
                             <div>
                               <span className='resultsCount'>
-                                {searchResult.total}
+                                {searchResult.length}
                               </span>
 
-                              {searchResult.total === 1 ? ' result' : ' results'}
+                              {searchResult.length === 1 ? ' result' : ' results'}
                             </div>
                           </footer>
                         </>
                       ) : (
                         <div className='noResultsPane'>
                           <div className='noResults'>No results</div>
-                          <div className='noResultsDetail'>
-                            Try different search terms
-                          </div>
                         </div>
                       )}
                     </>
@@ -221,10 +222,8 @@ export class SearchDialog extends React.Component<{
     })
     console.log('search', query, result)
 
-    let searchResult: any = null // TODO
+    let searchResult: any = [] // TODO
     let searchError: types.APIError = null
-
-
 
     if (result.error || result.errorId) {
       searchError = result
@@ -233,15 +232,13 @@ export class SearchDialog extends React.Component<{
         return {
           id: r.id,
           emoji: r.icon ? r.icon.emoji : null,
-          title: r.properties?.Name?.title[0].plain_text,
-          domain: r.properties?.Domain?.select.name,
-          category: r.properties?.Category?.select.name,
+          title: r.properties?.Name?.title[0]?.plain_text,
+          domain: r.properties?.Domain?.select?.name,
+          category: r.properties?.Category?.select?.name,
           tags: r.properties?.Tags?.multi_select,
         }
       })
     }
-
-    searchResult.total = searchResult.length
     if (this.state.query === query) {
       this.setState({ isLoading: false, searchResult, searchError })
     }

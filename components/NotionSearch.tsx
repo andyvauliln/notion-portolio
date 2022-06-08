@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import cs from 'classnames'
-import { useNotionContext,SearchIcon } from 'react-notion-x'
+import { useNotionContext } from 'react-notion-x'
+import { SearchIcon } from 'react-notion-x/icons/search-icon'
 import {SearchDialog} from './NotionSearchDialog';
 
 

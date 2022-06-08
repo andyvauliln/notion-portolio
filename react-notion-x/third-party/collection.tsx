@@ -26,9 +26,9 @@ const isServer = typeof window === 'undefined'
 
 export const Collection: React.FC<{
   block:
-    | types.CollectionViewBlock
-    | types.CollectionViewPageBlock
-    | types.PageBlock
+  | types.CollectionViewBlock
+  | types.CollectionViewPageBlock
+  | types.PageBlock
   className?: string
   ctx: NotionContext
 }> = ({ block, className, ctx }) => {
@@ -82,14 +82,25 @@ const CollectionViewBlock: React.FC<{
   className?: string
 }> = ({ block, className }) => {
   const { recordMap, showCollectionViewDropdown } = useNotionContext()
+  const [isMounted, setIsMounted] = React.useState(false)
   const { view_ids: viewIds } = block
-  const collectionId = getBlockCollectionId(block, recordMap)
   const defaultCollectionViewId = viewIds[0]
   const [collectionState, setCollectionState] = useLocalStorage(block.id, {
     collectionViewId: defaultCollectionViewId
   })
 
-  const [isMounted, setIsMounted] = React.useState(false)
+  const collectionViewId = (isMounted && viewIds.find((id) => id === collectionState.collectionViewId)) ||defaultCollectionViewId
+
+  const collectionView = recordMap.collection_view[collectionViewId]?.value
+  const collectionId = getBlockCollectionId(block, recordMap)
+
+  const collection = recordMap.collection[collectionId]?.value
+ 
+  const collectionData =
+    recordMap.collection_query[collectionId]?.[collectionViewId]
+  const parentPage = getBlockParentPage(block, recordMap)
+
+
   React.useEffect(() => {
     setIsMounted(true)
   }, [])
@@ -108,7 +119,7 @@ const CollectionViewBlock: React.FC<{
         el.onmousemove = e => {
           tip.style.left = e.clientX + 'px'
           tip.style.top = e.clientY + 'px';
- 
+
           if (e.clientX > window.innerWidth / 2) {
             tip.style.transform = `translate(calc(-100% - 15px), ${e.clientY > window.innerHeight / 2 ? "calc(-100% - 15px)" : "15px"})`;
           }
@@ -124,13 +135,6 @@ const CollectionViewBlock: React.FC<{
       })
     }
   }, [collectionState])
-
-  
-
-  const collectionViewId =
-    (isMounted &&
-      viewIds.find((id) => id === collectionState.collectionViewId)) ||
-    defaultCollectionViewId
 
   const onChangeView = React.useCallback(
     (collectionViewId: string) => {
@@ -149,11 +153,7 @@ const CollectionViewBlock: React.FC<{
     windowWidth = 1024
   }
 
-  const collection = recordMap.collection[collectionId]?.value
-  const collectionView = recordMap.collection_view[collectionViewId]?.value
-  const collectionData =
-    recordMap.collection_query[collectionId]?.[collectionViewId]
-  const parentPage = getBlockParentPage(block, recordMap)
+
 
   const { width, padding } = React.useMemo(() => {
     const style: React.CSSProperties = {}
@@ -191,11 +191,6 @@ const CollectionViewBlock: React.FC<{
       padding
     }
   }, [windowWidth, parentPage, collectionView?.type, isMounted])
-
-  // console.log({
-  //   width,
-  //   padding
-  // })
 
   if (!(collection && collectionView && collectionData)) {
     console.warn('skipping missing collection view for block', block.id, {
@@ -269,7 +264,7 @@ const CollectionViewDropdownMenu: React.FC<{
           className={cs(
             'notion-collection-view-content-item',
             collectionViewId === viewId &&
-              'notion-collection-view-dropdown-content-item-active'
+            'notion-collection-view-dropdown-content-item-active'
           )}
         >
           <CollectionViewColumnDesc

@@ -40,12 +40,12 @@ async function searchNotionImpl(
   //   .json()
 }
 
-export const searchNotionCollection = pMemoize(searchNotionCollectionImpl, {
-  cacheKey: (args) => args[0]?.query,
-  cache: new ExpiryMap(10000)
-})
+// export const searchNotionCollection = pMemoize(searchNotionCollectionImpl, {
+//   cacheKey: (args) => JSON.stringify(args?.filter),
+//   cache: new ExpiryMap(10000)
+// })
 
-async function searchNotionCollectionImpl(params){
+export async function searchNotionCollection(params){
   return fetch(api.searchNotionCollection, {
     method: 'POST',
     body: JSON.stringify(params),

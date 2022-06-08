@@ -83,7 +83,7 @@ export const NotionRenderer: React.FC<{
         margin: getMediumZoomMargin()
       }),
     []
-  )
+  )  
 
   return (
     <NotionContextProvider

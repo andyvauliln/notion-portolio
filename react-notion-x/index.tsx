@@ -1,12 +1,8 @@
 export { NotionRenderer } from './renderer'
-
 export * from './types'
 export * from './utils'
 export * from './context'
 export * from './components/text'
 export * from './components/header'
 export * from './components/page-title'
-export * from './components/checkbox'
-export * from './icons/search-icon'
-export * from './icons/clear-icon'
-export * from './icons/loading-icon'
+

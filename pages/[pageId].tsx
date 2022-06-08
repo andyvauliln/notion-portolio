@@ -9,7 +9,6 @@ export const getStaticProps = async (context) => {
 
   try {
     const props = await resolveNotionPage(domain, rawPageId)
-    //to do move to server
     if (props.site && props.site.rootNotionPageId === props.pageId) {
       Object.keys(props.recordMap.collection_query).forEach((r) => {
         Object.keys(props.recordMap.collection_query[r]).forEach((item) => {

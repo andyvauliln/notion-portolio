@@ -18,7 +18,7 @@ import { IoGlobeOutline } from "@react-icons/all-files/io5/IoGlobeOutline";
 import { Header, useNotionContext } from 'react-notion-x'
 import * as types from 'notion-types'
 import Logo from './Logo'
-//import NotionSearch  from './NotionSearch'
+import NotionSearch  from './NotionSearch'
 
 import { useDarkMode } from 'lib/use-dark-mode'
 import useBookmarks from 'lib/useBookmarks'
@@ -146,7 +146,7 @@ export const NotionPageHeader: React.FC<{
             <ToggleThemeButton />
 
 
-            {/* {isSearchEnabled && <NotionSearch block={block} title={null} />} */}
+            {isSearchEnabled && <NotionSearch block={block} title={null} />}
             {
               ![...navigationLinks, {pageId :'9bff14071eeb4da3a51fa9a07b47eb55'}].some(r => r.pageId === block.id.replaceAll("-", "")) && 
               <ToggleBookMarks block={block} recordMap={recordMap} />

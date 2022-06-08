@@ -112,7 +112,7 @@ export const FooterImpl: React.FC = () => {
               title={`Instagram @duniakripto_ind`}
               target='_blank'
               rel='noopener noreferrer'
-            > <div className={styles.socialtext}>Instagram News</div>
+            > <div className={styles.socialtext}>Instagram</div>
               <FaInstagram size={breakpoint === 'M' || breakpoint === "L" ? 25 : 20}/>
             </a>
           )}
@@ -124,12 +124,12 @@ export const FooterImpl: React.FC = () => {
               title={`Telegram Channel @duniakriptoind`}
               target='_blank'
               rel='noopener noreferrer'
-            >  <div className={styles.socialtext}>Telegram News</div>
+            >  <div className={styles.socialtext}>Telegram</div>
               <FaTelegram size={breakpoint === 'M' || breakpoint === "L" ? 25 : 20} />
             </a>
           )}
 
-          {config.telegramChat && (
+          {/* {config.telegramChat && (
             <a
               className={styles.telegramChat}
               href={config.telegramChat}
@@ -139,7 +139,7 @@ export const FooterImpl: React.FC = () => {
             > <div className={styles.socialtext} >Chat</div>
               <FaTelegram size={breakpoint === 'M' || breakpoint === "L" ? 25 : 20} />
             </a>
-          )}
+          )} */}
         </div>
       </div>
 

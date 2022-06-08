@@ -122,7 +122,7 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
       {getPageProperty("Description", block, recordMap) ? (
         <span
           data-tip={getPageProperty("Description", block, recordMap)}
-          className='tip-top notion-text'
+          className='tip-top'
         >
           <components.PageLink
         className={cs(

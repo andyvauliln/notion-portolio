@@ -65,7 +65,7 @@ function Gallery({ blockIds, collectionView, collection }) {
             `notion-gallery-grid-size-${gallery_cover_size}`
           )}
         >
-          {blockIds?.map((blockId) => {
+          {(blockIds && blockIds.length )? blockIds.map((blockId) => {
             const block = recordMap.block[blockId]?.value as PageBlock
             if (!block) return null
 
@@ -80,7 +80,9 @@ function Gallery({ blockIds, collectionView, collection }) {
                 key={blockId}
               />
             )
-          })}
+          }):
+          <div style={{width:100, position: "absolute", right: "calc(50% - 50px)", top: "calc(50% - 10px)", textAlign:"center", fontSize: "20px", fontWeight: "bold", opacity: 0.7 }}>No Result</div>
+          }
         </div>
       </div>
     </div>
