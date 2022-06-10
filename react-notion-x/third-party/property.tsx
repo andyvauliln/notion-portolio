@@ -349,7 +349,7 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
                 key={index}
                 className={cs(
                   `notion-property-${schema.type}-item`,
-                  color && `notion-item-${color}`
+                  `notion-item-${color || "yellow"}`
                 )}
               >
                 {value}

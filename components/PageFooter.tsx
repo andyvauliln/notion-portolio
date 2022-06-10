@@ -5,7 +5,7 @@ import styles from './styles.module.css'
 import * as config from 'lib/config'
 
 export const PageFooterImpl: React.FC = () => {
-    return (<div style={{ borderTop: "1px solid #555555", marginTop: "1em", display: "flex", width: "100%", flexDirection: "column" }}>
+    return (<div style={{ borderTop: "1px solid #555555", display: "flex", width: "100%", flexDirection: "column" }}>
         <div style={{display: "flex", alignItems:"center", flexWrap: "wrap", fontSize:"20px", paddingTop: "1em", fontWeight: "bold"}}>
             <div>Follow us in </div>&nbsp;&nbsp;
             <a  style={{display:"flex", alignItems:"center",  color: "var(--notion-blue)", borderBottom: "2px solid var(--notion-blue)"}}

@@ -95,8 +95,8 @@ export const Block: React.FC<BlockProps> = (props) => {
   // ugly hack to make viewing raw collection views work properly
   // e.g., 6d886ca87ab94c21a16e3b82b43a57fb
   if (level === 0 && block.type === 'collection_view') {
-    ;(block as any).type = 'collection_view_page'
-  }  
+    (block as any).type = 'collection_view_page'
+  }
 
   const blockId = hideBlockId
     ? 'notion-block'
@@ -120,10 +120,10 @@ export const Block: React.FC<BlockProps> = (props) => {
             block.type === 'page'
               ? block.properties
               : {
-                  title:
-                    recordMap.collection[getBlockCollectionId(block, recordMap)]
-                      ?.value?.name
-                }
+                title:
+                  recordMap.collection[getBlockCollectionId(block, recordMap)]
+                    ?.value?.name
+              }
 
           const coverPosition = (1 - (page_cover_position || 0.5)) * 100
           const pageCoverObjectPosition = `center ${coverPosition}%`
@@ -149,20 +149,27 @@ export const Block: React.FC<BlockProps> = (props) => {
           const isBlogPost = block?.type === 'page' && block?.parent_table === 'collection'
           let datePropertyId = null;
           let tagsPropertyId = null;
+          let sourcePropertyId = null;
           let collectionId = null;
           let collection = null;
-          if(isBlogPost){
-             collectionId = block.parent_id
-             collection = recordMap.collection[collectionId]?.value
-            
-             datePropertyId = collection.schema && Object.keys(collection.schema).find(
-              (key) => collection.schema[key]?.name?.toLowerCase() === "date"
+          if (isBlogPost) {
+            collectionId = block.parent_id
+            collection = recordMap.collection[collectionId]?.value
+            sourcePropertyId = collection.schema && Object.keys(collection.schema).find(
+              (key) => collection.schema[key]?.name?.toLowerCase() === "source"
             )
-             tagsPropertyId = collection.schema && Object.keys(collection.schema).find(
+            datePropertyId = collection.schema && Object.keys(collection.schema).find(
+              (key) => collection.schema[key]?.name?.toLowerCase() === "post date"
+            )
+            tagsPropertyId = collection.schema && Object.keys(collection.schema).find(
               (key) => collection.schema[key]?.name?.toLowerCase() === "tags"
             )
-          }    
-          
+            console.log('sourcePropertyId', sourcePropertyId, block.properties?.[sourcePropertyId]);
+            console.log('datePropertyId', datePropertyId, block.properties?.[datePropertyId]);
+            console.log('tagsPropertyId', tagsPropertyId, block.properties?.[tagsPropertyId]);
+            
+          }
+
 
           return (
             <div
@@ -229,34 +236,35 @@ export const Block: React.FC<BlockProps> = (props) => {
                         <Text value={properties?.title} block={block} />
                       )}
                     </h1>
-                    {(isBlogPost && datePropertyId) && 
-                      <div>
-                           <Property
-                              schema={collection.schema[datePropertyId]}
-                              data={block.properties?.[datePropertyId]}
-                              propertyId={datePropertyId}
-                              block={block}
-                              collection={collection}
-                            />
+
+                    {(isBlogPost && tagsPropertyId && block.properties?.[tagsPropertyId]) &&
+                      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                        <Property
+                          schema={collection.schema[tagsPropertyId]}
+                          data={block.properties?.[tagsPropertyId]}
+                          propertyId={tagsPropertyId}
+                          block={block}
+                          collection={collection}
+                        />
                       </div>
                     }
-                    {(isBlogPost && tagsPropertyId) && 
-                      <div>
-                           <Property
-                              schema={collection.schema[tagsPropertyId]}
-                              data={block.properties?.[tagsPropertyId]}
-                              propertyId={tagsPropertyId}
-                              block={block}
-                              collection={collection}
-                            />
+                    {(isBlogPost && datePropertyId && block.properties?.[datePropertyId]) &&
+                      <div style={{ width: "100%", display: "flex", justifyContent: "center", marginTop: "0.5em", opacity: 0.7 }} >
+                        <Property
+                          schema={collection.schema[datePropertyId]}
+                          data={block.properties?.[datePropertyId]}
+                          propertyId={datePropertyId}
+                          block={block}
+                          collection={collection}
+                        />
                       </div>
                     }
 
                     {(block.type === 'collection_view_page' ||
                       (block.type === 'page' &&
                         block.parent_table === 'collection')) && (
-                      <components.Collection block={block} ctx={ctx} />
-                    )}
+                        <components.Collection block={block} ctx={ctx} />
+                      )}
 
                     {block.type !== 'collection_view_page' && (
                       <div
@@ -282,7 +290,26 @@ export const Block: React.FC<BlockProps> = (props) => {
                         )}
                       </div>
                     )}
-
+                    {(isBlogPost && sourcePropertyId && block.properties?.[sourcePropertyId]) &&
+                      <div style={{paddingTop: "1em", paddingBottom: "1em", width: "100%", display:'flex', justifyContent: "end", paddingRight:"0.5em"}} >
+                       <span style={{opacity:0.7, marginRight:5}}>
+                       Source:
+                       </span>
+                       &nbsp;
+                        <Property
+                          schema={collection.schema[sourcePropertyId]}
+                          // eslint-disable-next-line no-unsafe-optional-chaining
+                          data={[
+                            [
+                              block.properties?.[sourcePropertyId][0][0].match(/:\/\/(.[^/]+)/)[1],
+                                block.properties?.[sourcePropertyId][0][1]
+                            ]
+                        ]}
+                          propertyId={sourcePropertyId}
+                          block={block}
+                          collection={collection}
+                        />
+                      </div>}
                     {pageFooter}
                   </main>
 
@@ -312,8 +339,8 @@ export const Block: React.FC<BlockProps> = (props) => {
               {(block.type === 'collection_view_page' ||
                 (block.type === 'page' &&
                   block.parent_table === 'collection')) && (
-                <components.Collection block={block} ctx={ctx} />
-              )}
+                  <components.Collection block={block} ctx={ctx} />
+                )}
 
               {block.type !== 'collection_view_page' && children}
 
@@ -575,9 +602,8 @@ export const Block: React.FC<BlockProps> = (props) => {
       const columns =
         parent?.content?.length || Math.max(2, Math.ceil(1.0 / ratio))
 
-      const width = `calc((100% - (${
-        columns - 1
-      } * ${spacerWidth})) * ${ratio})`
+      const width = `calc((100% - (${columns - 1
+        } * ${spacerWidth})) * ${ratio})`
       const style = { width }
 
       return (
@@ -623,7 +649,7 @@ export const Block: React.FC<BlockProps> = (props) => {
             className={cs(
               'notion-callout',
               block.format?.block_color &&
-                `notion-${block.format?.block_color}_co`,
+              `notion-${block.format?.block_color}_co`,
               blockId
             )}
           >
