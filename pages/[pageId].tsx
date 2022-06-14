@@ -6,16 +6,9 @@ import { NotionPage } from 'components'
 
 export const getStaticProps = async (context) => {
   const rawPageId = context.params.pageId as string
-
   try {
     const props = await resolveNotionPage(domain, rawPageId)
-    if (props.site && props.site.rootNotionPageId === props.pageId) {
-      Object.keys(props.recordMap.collection_query).forEach((r) => {
-        Object.keys(props.recordMap.collection_query[r]).forEach((item) => {
-          props.recordMap.collection_query[r][item].collection_group_results.blockIds = props.recordMap.collection_query[r][item].collection_group_results.blockIds.slice(0, 3)
-        });
-      });
-    }
+   
     return { props, revalidate: 10 }
   } catch (err) {
     console.error('page error', domain, rawPageId, err)
@@ -48,7 +41,6 @@ export async function getStaticPaths() {
   return staticPaths
 }
 
-export default function NotionDomainDynamicPage(props) {
-  
+export default function NotionDomainDynamicPage(props) {  
   return <NotionPage {...props} />
 }

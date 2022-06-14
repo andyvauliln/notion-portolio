@@ -164,10 +164,6 @@ export const Block: React.FC<BlockProps> = (props) => {
             tagsPropertyId = collection.schema && Object.keys(collection.schema).find(
               (key) => collection.schema[key]?.name?.toLowerCase() === "tags"
             )
-            console.log('sourcePropertyId', sourcePropertyId, block.properties?.[sourcePropertyId]);
-            console.log('datePropertyId', datePropertyId, block.properties?.[datePropertyId]);
-            console.log('tagsPropertyId', tagsPropertyId, block.properties?.[tagsPropertyId]);
-            
           }
 
 
