@@ -269,10 +269,11 @@
   margin-top: 2em;
   margin-bottom: 2em;
 }
-
+ 
 .cryptoWallets {
   max-width: 450px;
 }
+
 
 @media only screen and (max-width: 1020px) {
 
@@ -285,6 +286,9 @@
   .mobileNav{
     display: flex !important;
     justify-content: space-between;
+  }
+  .bookmarksHeader{
+    display: inline-flex !important;
   }
   .mobileNav svg:hover{
     color: #2795e9;

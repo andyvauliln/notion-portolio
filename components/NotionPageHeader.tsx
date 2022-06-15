@@ -18,7 +18,9 @@ import { IoGlobeOutline } from "@react-icons/all-files/io5/IoGlobeOutline";
 import { Header, useNotionContext } from 'react-notion-x'
 import * as types from 'notion-types'
 import Logo from './Logo'
-import NotionSearch  from './NotionSearch'
+import NotionSearch from './NotionSearch'
+import { translate } from 'lib/translation'
+import Bookmarks from './Bookmarks'
 
 import { useDarkMode } from 'lib/use-dark-mode'
 import useBookmarks from 'lib/useBookmarks'
@@ -49,6 +51,7 @@ const ToggleThemeButton = () => {
 }
 const ToggleBookMarks = ({ block, recordMap }) => {
   const [hasMounted, setHasMounted] = React.useState(false)
+
   const bookmarks = useBookmarks()
 
 
@@ -57,17 +60,17 @@ const ToggleBookMarks = ({ block, recordMap }) => {
   }, [])
 
   const onToggleBookmarks = React.useCallback((id, bookmarkType) => {
-    if(block.parent_table === 'collection' && recordMap.collection[block.parent_id]){
-      
-      const schema = Object.keys(recordMap.collection[block.parent_id].value.schema).reduce((obj, item)=> { 
+    if (block.parent_table === 'collection' && recordMap.collection[block.parent_id]) {
+
+      const schema = Object.keys(recordMap.collection[block.parent_id].value.schema).reduce((obj, item) => {
         obj[recordMap.collection[block.parent_id].value.schema[item].name] = item
-       
-        return {...obj}
-      },{})
-      if(block.properties[schema.Category]){
+
+        return { ...obj }
+      }, {})
+      if (block.properties[schema.Category]) {
         block.Category = block.properties[schema.Category].join(" ")
       }
-      if(block.properties[schema.Domain]){
+      if (block.properties[schema.Domain]) {
         block.Domain = block.properties[schema.Domain].join(" ")
       }
     }
@@ -77,20 +80,20 @@ const ToggleBookMarks = ({ block, recordMap }) => {
 
   return (
     <>
-      {!bookmarks.isBookmarked(block.id, "bookmark") && 
-      <div
-        className={cs('breadcrumb', 'button', !hasMounted && styles.hidden)}
-        onClick={() => onToggleBookmarks(block.id, 'favorite')}
-      >
-        {hasMounted && bookmarks.isBookmarked(block.id, "favorite") ? <IoStar size={21} /> : <IoStarOutline size={21} />}
-      </div>}
-      {!bookmarks.isBookmarked(block.id, "favorite") && 
-      <div
-        className={cs('breadcrumb', 'button', !hasMounted && styles.hidden)}
-        onClick={() => onToggleBookmarks(block.id, 'bookmark')}
-      >
-        {hasMounted && bookmarks.isBookmarked(block.id, "bookmark") ? <IoBookmarks size={21} /> : <IoBookmarksOutline size={21} />}
-      </div>}
+      {!bookmarks.isBookmarked(block.id, "bookmark") &&
+        <div
+          className={cs('breadcrumb', 'button', !hasMounted && styles.hidden)}
+          onClick={() => onToggleBookmarks(block.id, 'favorite')}
+        >
+          {hasMounted && bookmarks.isBookmarked(block.id, "favorite") ? <IoStar size={21} /> : <IoStarOutline size={21} />}
+        </div>}
+      {!bookmarks.isBookmarked(block.id, "favorite") &&
+        <div
+          className={cs('breadcrumb', 'button', !hasMounted && styles.hidden)}
+          onClick={() => onToggleBookmarks(block.id, 'bookmark')}
+        >
+          {hasMounted && bookmarks.isBookmarked(block.id, "bookmark") ? <IoBookmarks size={21} /> : <IoBookmarksOutline size={21} />}
+        </div>}
     </>
   )
 }
@@ -100,8 +103,9 @@ export const NotionPageHeader: React.FC<{
   block: types.CollectionViewPageBlock | types.PageBlock
 }> = ({ block }) => {
   const { components, mapPageUrl, recordMap } = useNotionContext()
-  
-  if (navigationStyle === 'default') { 
+  const [isBookmarkOpen, setBookmarkOpen] = React.useState(false)
+
+  if (navigationStyle === 'default') {
     return <Header block={block} />
   }
   return (
@@ -126,7 +130,7 @@ export const NotionPageHeader: React.FC<{
                       className={cs(styles.navLink, 'breadcrumb', 'button')}
                     >
                       {getIcon(link.title)}
-                      {link.title}
+                      {translate("tk_" + link.title)}
                     </components.PageLink>
                   )
                 } else {
@@ -142,41 +146,46 @@ export const NotionPageHeader: React.FC<{
                 }
               })
               .filter(Boolean)}
-            <div style={{ borderLeft: "1px solid var(--divider-color)", height: "60%", marginRight: "0.5em", marginLeft: "0.5em" }}></div>
+            <div style={{ borderLeft: "1px solid #555555", height: "60%", marginRight: "0.5em", marginLeft: "0.5em" }}></div>
+            {isSearchEnabled && <NotionSearch block={block} title={null} />}
+            {
+              ![...navigationLinks, { pageId: '9bff14071eeb4da3a51fa9a07b47eb55' }].some(r => r.pageId === block.id.replaceAll("-", "")) &&
+              <ToggleBookMarks block={block} recordMap={recordMap} />
+            }
             <ToggleThemeButton />
 
 
-            {isSearchEnabled && <NotionSearch block={block} title={null} />}
-            {
-              ![...navigationLinks, {pageId :'9bff14071eeb4da3a51fa9a07b47eb55'}].some(r => r.pageId === block.id.replaceAll("-", "")) && 
-              <ToggleBookMarks block={block} recordMap={recordMap} />
-             }
+            
+             <div className={cs('bookmarksHeader', 'breadcrumb', 'button')} onClick={r=>setBookmarkOpen(!isBookmarkOpen)}>
+              {getIcon("Bookmarks")}
+          </div>
           </div>
         </div>
+        {isBookmarkOpen && <Bookmarks isOpen={isBookmarkOpen} onClose={r=>setBookmarkOpen(false)}  />}
       </header>
     </React.Fragment>
   )
 }
 
-const getIcon = (title, size=16) => {  
-  if(title === "Home")
-  return <IoHome style={{marginRight: 5}} size={size} />
-  if(title === "News")
-  return <GiNewspaper size={size} style={{marginRight: 5}}/>
-  if(title === "Education")
-  return <FaUserGraduate size={size} style={{marginRight: 5}}/>
-  if(title === "Events")
-  return <IoCalendar size={size} style={{marginRight: 5}}/>
-  if(title === "Articles")
-  return <GiSecretBook size={size} style={{marginRight: 5}}/>
-  if(title === "Jobs")
-  return <MdWork size={size} style={{marginRight: 5}}/>
-  if(title === "Tools")
-  return <BsTools  size={size} style={{marginRight: 5}}/>
-  if(title === "Duniakripto")
-  return <IoGlobeOutline size={size} style={{marginRight: 5}}/>
-  if(title === "Bookmarks")
-  return <FaUserCircle size={size} style={{marginRight: 5}}/>
-  
+const getIcon = (title, size = 16) => {
+  if (title === "Home")
+    return <IoHome style={{ marginRight: 5 }} size={size} />
+  if (title === "News")
+    return <GiNewspaper size={size} style={{ marginRight: 5 }} />
+  if (title === "Education")
+    return <FaUserGraduate size={size} style={{ marginRight: 5 }} />
+  if (title === "Events")
+    return <IoCalendar size={size} style={{ marginRight: 5 }} />
+  if (title === "Articles")
+    return <GiSecretBook size={size} style={{ marginRight: 5 }} />
+  if (title === "Jobs")
+    return <MdWork size={size} style={{ marginRight: 5 }} />
+  if (title === "Tools")
+    return <BsTools size={size} style={{ marginRight: 5 }} />
+  if (title === "Duniakripto")
+    return <IoGlobeOutline size={size} style={{ marginRight: 5 }} />
+  if (title === "Bookmarks")
+    return <FaUserCircle size={22} style={{ marginRight: 5 }} />
+
   return null;
 }

@@ -20,6 +20,7 @@ import { searchNotion } from 'lib/search-notion'
 import { useDarkMode } from 'lib/use-dark-mode'
 import * as types from 'lib/types'
 import * as config from 'lib/config'
+import { translate } from 'lib/translation'
 
 // components
 import { Loading } from './Loading'
@@ -33,7 +34,7 @@ import { PageHeader } from './PageHeader'
 //import { GitHubShareButton } from './GitHubShareButton'
 
 import styles from './styles.module.css'
-import useBookmarks from 'lib/useBookmarks'
+
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -156,41 +157,10 @@ export const NotionPage: React.FC<types.PageProps> = ({
 }) => {
 
   const router = useRouter()
-  const bookmarks = useBookmarks()
+
   const lite = useSearchParam('lite')
 
-  //bookmarks page
-  if (pageId && pageId.replaceAll('-', '') === "9bff14071eeb4da3a51fa9a07b47eb55") {
-    bookmarks.data.forEach(bookmark => {
-      recordMap.block[bookmark.id] = { role: "reader", value: bookmark }
-    })
-
-    Object.values(recordMap.collection_query).forEach((col) => {
-      Object.keys(col).forEach((key) => {
-        const val = col[key];
-
-        if (key === "edf96bcc-a919-40b5-bcd3-4b26414a2039") { // favorite
-          val.collection_group_results.blockIds = bookmarks.data.filter(r => r.bookmarkType === 'favorite').map(r => r.id);
-        }
-        if (key === "8d3fcfa7-18ad-45fb-8226-441f7216d268") { //bookmarks
-          val.collection_group_results.blockIds = bookmarks.data.filter(r => r.bookmarkType === 'bookmark').map(r => r.id);
-        }
-        if (key === "e9495047-d8cc-4689-90b5-4c4f8b31fd0f") { // by category
-          Object.keys(val).filter(key => key.indexOf('result') > -1).forEach(prop => {
-            val[prop].blockIds = bookmarks.data.filter(bf => bf.Category && bf.Category.toLowerCase().indexOf(prop.split(":")[2].toLowerCase()) > -1).map(br => br.id)
-          })
-        }
-        if (key === "4f2f23ca-e1b9-4a4d-b965-cabec17daca2") { // by domain
-
-          Object.keys(val).filter(key => key.indexOf('result') > -1).forEach(prop => {
-            val[prop].blockIds = bookmarks.data
-              .filter(bf => bf.Domain && bf.Domain.toLowerCase().indexOf(prop.split(":")[2].toLowerCase()) > -1)
-              .map(br => br.id)
-          })
-        }
-      })
-    })
-  }
+  
 
   const components = React.useMemo(
     () => ({
@@ -217,12 +187,12 @@ export const NotionPage: React.FC<types.PageProps> = ({
         if (el.querySelectorAll('.tooltip').length === 0) {
           const tip = document.createElement('div');
           tip.classList.add('tooltip');
-          tip.innerHTML += `<div class='tooltip-header notion-text'>Preview</div>
+          tip.innerHTML += `<div class='tooltip-header notion-text'>${translate("tk_preview")}</div>
                            <div class='tooltip-body'>
                             ${el.getAttribute('data-tip')}
                             <div class=''>...</div>
                            </div>
-                           <div class='tooltip-footer notion-text'>Click to Read More</div>`
+                           <div class='tooltip-footer notion-text'>${translate("tk_click_read_more")}</div>`
           el.appendChild(tip);
           el.onmousemove = e => {
             tip.style.left = e.clientX + 'px'

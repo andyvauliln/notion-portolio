@@ -92,7 +92,9 @@ const CollectionViewBlock: React.FC<{
   const collectionViewId = (isMounted && viewIds.find((id) => id === collectionState.collectionViewId)) ||defaultCollectionViewId
 
   const collectionView = recordMap.collection_view[collectionViewId]?.value
-  const collectionId = getBlockCollectionId(block, recordMap)
+  const collectionId = collectionView.format?.collection_pointer?.id || block.collection_id || block.format?.collection_pointer?.id
+  // getBlockCollectionId(block, recordMap)
+  
 
   const collection = recordMap.collection[collectionId]?.value
  

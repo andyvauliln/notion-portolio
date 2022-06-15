@@ -8,6 +8,7 @@ import {
   getBlockCollectionId
 } from 'notion-utils'
 import * as types from 'notion-types'
+import { translate } from 'lib/translation'
 
 import { PageIcon } from './components/page-icon'
 import { PageTitle } from './components/page-title'
@@ -226,7 +227,7 @@ export const Block: React.FC<BlockProps> = (props) => {
                     )}
 
                     {pageHeader}
-
+                      {console.log(pageTitle, page_icon, hasPageCover, pageCover, "pageTitle")}
                     <h1 className='notion-title'>
                       {pageTitle ?? (
                         <Text value={properties?.title} block={block} />
@@ -289,7 +290,7 @@ export const Block: React.FC<BlockProps> = (props) => {
                     {(isBlogPost && sourcePropertyId && block.properties?.[sourcePropertyId]) &&
                       <div style={{paddingTop: "1em", paddingBottom: "1em", width: "100%", display:'flex', justifyContent: "end", paddingRight:"0.5em"}} >
                        <span style={{opacity:0.7, marginRight:5}}>
-                       Source:
+                       {translate("tk_source")}
                        </span>
                        &nbsp;
                         <Property

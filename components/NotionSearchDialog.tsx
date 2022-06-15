@@ -11,6 +11,7 @@ import { GiNewspaper } from "@react-icons/all-files/gi/GiNewspaper";
 import { FaUserGraduate } from "@react-icons/all-files/fa/FaUserGraduate";
 import { GiSecretBook } from "@react-icons/all-files/gi/GiSecretBook";
 import { BsTools } from "@react-icons/all-files/bs/BsTools";
+import { translate } from "lib/translation";
 
 // TODO: modal.default.setAppElement('.notion-viewport')
 const settings = [{ name: "News", id: "15aea51f-e667-43dd-83fa-27fadd32c94d", checked: true },
@@ -65,7 +66,6 @@ export class SearchDialog extends React.Component<{
                 className='notion-search'
                 overlayClassName='notion-search-overlay'
                 onRequestClose={onClose}
-                onAfterOpen={this._onAfterOpen}
               >
                 <SearchSetting settings={this.state.settings} handleClick={this._handleClick} />
                 <div className='quickFindMenu'>
@@ -81,7 +81,7 @@ export class SearchDialog extends React.Component<{
 
                     <input
                       className='searchInput'
-                      placeholder='Search'
+                      placeholder={translate("tk_search_placeholder")}
                       value={query}
                       ref={this._inputRef}
                       onChange={this._onChangeQuery}
@@ -143,7 +143,7 @@ export class SearchDialog extends React.Component<{
                         </>
                       ) : (
                         <div className='noResultsPane'>
-                          <div className='noResults'>No results</div>
+                          <div className='noResults'>{translate("tk_no_result")}</div>
                         </div>
                       )}
                     </>
@@ -151,7 +151,7 @@ export class SearchDialog extends React.Component<{
 
                   {hasQuery && !searchResult && searchError && (
                     <div className='noResultsPane'>
-                      <div className='noResults'>Search error</div>
+                      <div className='noResults'>{translate("tk_error")}</div>
                     </div>
                   )}
                 </div>
@@ -252,7 +252,7 @@ const SearchSetting = ({ handleClick, settings }) => {
       return <div key={key} className='notion-to-do-item' onClick={() => handleClick({ ...item, checked: !item.checked })}>
         {getIcon(item.name, 24, 8)}
         <div className={`notion-to-do-body ${item.checked && "notion-to-do-checked"}`}>
-          <span>{item.name}</span>
+          <span>{translate("tk_" + item.name)}</span>
         </div>
         <Checkbox blockId={"blockId"} isChecked={item.checked} />
 
@@ -266,16 +266,15 @@ const getSearchFilter = function (settings, query) {
   const authors = []
   const queryStr = ""
   query.split(" ").forEach(element => {
-    if (element.indexOf("@") === 0) {
-      authors.push(element);
-    }
-    else if (element.indexOf("#") === 0) {
+    // if (element.indexOf("@") === 0) {
+    //   authors.push(element);
+    // }
+    if (element.indexOf("#") === 0) {
       tags.push(element);
     }
     else {
       queryStr += ` ${element}`;
     }
-
   });
  
   
@@ -290,9 +289,9 @@ const getSearchFilter = function (settings, query) {
       tags.length && {
         "or": tags.map(r => ({ property: "Tags", multi_select: { contains: r.replace("#", "") } }))
       },
-      authors.length && {
-        "or": authors.map(r => ({ property: "Author", rich_text: { contains: r.replace("@", "") } }))
-      }
+      // authors.length && {
+      //   "or": authors.map(r => ({ property: "Author", rich_text: { contains: r.replace("@", "") } }))
+      // }
     ].filter(Boolean)
   }
   

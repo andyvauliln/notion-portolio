@@ -3,11 +3,12 @@ import { FaInstagram } from '@react-icons/all-files/fa/FaInstagram'
 import { FaTelegram } from '@react-icons/all-files/fa/FaTelegram'
 import styles from './styles.module.css'
 import * as config from 'lib/config'
+import {translate} from 'lib/translation'
 
 export const PageFooterImpl: React.FC = () => {
     return (<div style={{ borderTop: "1px solid #555555", display: "flex", width: "100%", flexDirection: "column" }}>
         <div style={{display: "flex", alignItems:"center", flexWrap: "wrap", fontSize:"20px", paddingTop: "1em", fontWeight: "bold"}}>
-            <div>Follow us in </div>&nbsp;&nbsp;
+            <div>{translate("tk_follow_us")} </div>&nbsp;&nbsp;
             <a  style={{display:"flex", alignItems:"center",  color: "var(--notion-blue)", borderBottom: "2px solid var(--notion-blue)"}}
                 href={config.instagram}
                 title={`Instagram @duniakripto_ind`}
@@ -19,7 +20,7 @@ export const PageFooterImpl: React.FC = () => {
                 <FaInstagram size={25} />
                 
             </a>
-            &nbsp; and  &nbsp;
+            &nbsp; {translate("tk_and")}  &nbsp;
             {config.telegramChannel && (
                 <a
                     href={config.telegramChannel}
@@ -34,11 +35,10 @@ export const PageFooterImpl: React.FC = () => {
             )}
         </div>
         <h3 className="notion-h notion-h3 notion-h-indent-0 notion-block-d97691d4994f4dd2bb74b5f74e7089c7" data-id="d97691d4994f4dd2bb74b5f74e7089c7">
-            Support Us
+           {translate("tk_support_us")}
         </h3>
         <div className="notion-text notion-block-682ca6cf24e64f308a731854885fa42d">
-            <b>The project</b> right now doesn’t  have any <b>monetization </b>and developed on our resources. Help us to continue<b> building</b>
-            <b>great</b> and <b>useful</b> information and learning <b>crypto portal</b>.
+            {translate("tk_support_text")}
         </div>
         <blockquote className="notion-quote notion-block-6b9d3ee99e1d4136aef17759a3b44c75">
             <b>BTC</b>:&nbsp;

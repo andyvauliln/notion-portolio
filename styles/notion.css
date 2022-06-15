@@ -53,7 +53,7 @@
 }
 
 .notion-header .notion-nav-header {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -507,7 +507,6 @@
   justify-content: center;
 }
 
-
 @media only screen and (max-width: 1020px) {
   .notion-nav-header-rhs a {
     display: none !important;
@@ -666,4 +665,30 @@ input {
 .notion-header .breadcrumb:hover{
   background: none !important;
   color: var(--notion-blue);
+}
+.bookmarksHeader {
+  display: none !important;
+}
+
+@media only screen and (max-width: 1020px) {
+  .bookmarksHeader {
+    display: flex !important;
+  }
+  .bookmarkmodal {
+    bottom: 102px;
+  }
+}
+
+.bookmarkmodal::-webkit-scrollbar {
+  display: none;
+}
+
+.bookmarkmodal{
+  background: var(--bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 70px;
+  overflow-y: scroll;
 }
