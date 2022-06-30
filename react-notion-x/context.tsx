@@ -83,6 +83,7 @@ export const dummyLink = ({ href, rel, target, title, ...rest }) => (
   <span {...rest} />
 )
 
+// eslint-disable-next-line react/display-name
 const dummyComponent = (name: string) => () => {
   console.warn(
     `Warning: using empty component "${name}" (you should override this in NotionRenderer.components)`
@@ -91,8 +92,6 @@ const dummyComponent = (name: string) => () => {
   return null
 }
 
-// TODO: should we use React.memo here?
-// https://reactjs.org/docs/react-api.html#reactmemo
 const dummyOverrideFn = (_: any, defaultValueFn: () => React.ReactNode) =>
   defaultValueFn()
 
