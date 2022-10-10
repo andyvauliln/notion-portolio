@@ -20,8 +20,8 @@
     "paths": {
       "/react-notion-x/*": ["react-notion-x"],
       "/notion-client/*": ["notion-client"],
-      "/notion-utils/*": ["notion-utils"]
-    }
+      "/lib/notion-utils/*": ["notion-utils"]
+    },
   },
   "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "site.config.ts"]
