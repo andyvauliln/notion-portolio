@@ -4,7 +4,7 @@ import { FaTelegram } from '@react-icons/all-files/fa/FaTelegram'
 import { IoHome } from '@react-icons/all-files/io5/IoHome'
 import { GiNewspaper } from "@react-icons/all-files/gi/GiNewspaper";
 import { FaUserGraduate } from "@react-icons/all-files/fa/FaUserGraduate";
-import { FaUserCircle } from "@react-icons/all-files/fa/FaUserCircle";
+import { IoLibraryOutline } from "@react-icons/all-files/io5/IoLibraryOutline";
 import { GiSecretBook } from "@react-icons/all-files/gi/GiSecretBook";
 import { IoCalendar } from "@react-icons/all-files/io5/IoCalendar";
 import { MdWork } from "@react-icons/all-files/md/MdWork";
@@ -41,7 +41,7 @@ const getIcon = (title, breakpoint) => {
   if (title === "Duniakripto")
     return <IoGlobeOutline size={size} />
   if (title === "Bookmarks")
-    return <FaUserCircle size={size} />
+    return <IoLibraryOutline size={size} />
 
   return null;
 }
@@ -89,7 +89,7 @@ export const FooterImpl: React.FC = () => {
             .filter(Boolean)}
         </div>
         <div className={styles.settings} title={translate("tk_bookmarks")} onClick={r=>setBookmarkOpen(!isBookmarkOpen)}>
-            {<FaUserCircle size={30} />}
+          {<IoLibraryOutline size={30} />}
         </div>
 
         <div className={styles.social}>
