@@ -10,10 +10,7 @@ export interface SiteConfig {
   description?: string
   language?: string
 
-  twitter?: string
-  instagram?: string
-  telegramChannel?: string
-  telegramChat?: string
+  social?: any
 
   defaultPageIcon?: string | null
   defaultPageCover?: string | null

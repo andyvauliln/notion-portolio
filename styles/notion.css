@@ -25,6 +25,10 @@
   --notion-header-height: 54px;
 }
 
+.notion-app {
+  position: static;
+  background: var(--color-zinc-800);
+}
 .notion-page {
   padding-bottom: calc(max(5vh, 32px)) !important;
   line-height: 1.65;
@@ -665,30 +669,4 @@ input {
 .notion-header .breadcrumb:hover{
   background: none !important;
   color: var(--notion-blue);
-}
-.bookmarksHeader {
-  display: none !important;
-}
-
-@media only screen and (max-width: 1020px) {
-  .bookmarksHeader {
-    display: flex !important;
-  }
-  .bookmarkmodal {
-    bottom: 102px;
-  }
-}
-
-.bookmarkmodal::-webkit-scrollbar {
-  display: none;
-}
-
-.bookmarkmodal{
-  background: var(--bg-color);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 67px;
-  overflow-y: scroll;
 }

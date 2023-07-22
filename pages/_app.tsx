@@ -2,7 +2,7 @@
 import 'styles/global.css'
 
 // core styles shared by all of react-notion-x (required)
-import 'react-notion-x/styles.css'
+import 'react-notion-x'
 
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
@@ -20,53 +20,66 @@ import 'styles/notion.css'
 import 'styles/prism-theme.css'
 
 import * as React from 'react'
-import * as Fathom from 'fathom-client'
+//import * as Fathom from 'fathom-client'
 import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
-import posthog from 'posthog-js'
+import { Footer } from 'components/Footer'
+import { Header } from 'components/Header'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+//import { useRouter } from 'next/router'
+// import posthog from 'posthog-js'
 
-import { bootstrap } from 'lib/bootstrap-client'
-import {
-  isServer,
-  fathomId,
-  fathomConfig,
-  posthogId,
-  posthogConfig
-} from 'lib/config'
+// import { bootstrap } from 'lib/bootstrap-client'
+// import {
+//   isServer,
+//   fathomId,
+//   fathomConfig,
+//   posthogId,
+//   posthogConfig
+// } from 'lib/config'
 
-if (!isServer) {
-  bootstrap()
-}
+// if (!isServer) {
+//   bootstrap()
+// }
 
 export default function App({ Component, pageProps }: AppProps) {
-  const router = useRouter()
+  //const router = useRouter()
 
   React.useEffect(() => {
-    function onRouteChangeComplete() {
-      if (fathomId) {
-        Fathom.trackPageview()
-      }
+    AOS.init();
+    AOS.refresh();
+  })
 
-      if (posthogId) {
-        posthog.capture('$pageview')
-      }
-    }
-    
+  // React.useEffect(() => {
+  //   function onRouteChangeComplete() {
+  //     if (fathomId) {
+  //       Fathom.trackPageview()
+  //     }
 
-    if (fathomId) {
-      Fathom.load(fathomId, fathomConfig)
-    }
+  //     if (posthogId) {
+  //       posthog.capture('$pageview')
+  //     }
+  //   }
 
-    if (posthogId) {
-      posthog.init(posthogId, posthogConfig)
-    }
 
-    router.events.on('routeChangeComplete', onRouteChangeComplete)
+  //   if (fathomId) {
+  //     Fathom.load(fathomId, fathomConfig)
+  //   }
 
-    return () => {
-      router.events.off('routeChangeComplete', onRouteChangeComplete)
-    }
-  }, [router.events])
+  //   if (posthogId) {
+  //     posthog.init(posthogId, posthogConfig)
+  //   }
 
-  return <Component {...pageProps} />
+  //   router.events.on('routeChangeComplete', onRouteChangeComplete)
+
+  //   return () => {
+  //     router.events.off('routeChangeComplete', onRouteChangeComplete)
+  //   }
+  // }, [router.events])
+
+  return <>
+    <Header />
+    <Component {...pageProps} />
+    <Footer />
+  </>
 }

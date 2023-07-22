@@ -18,9 +18,12 @@
     "typeRoots": ["./node_modules/@types"],
     "incremental": true,
     "paths": {
-      "/react-notion-x/*": ["react-notion-x"],
-      "/notion-client/*": ["notion-client"],
-      "/lib/notion-utils/*": ["notion-utils"]
+      // "./components/react-notion-x/*": ["react-notion-x"],
+      // "./lib/notion-client/*": ["notion-client"],
+      // "./lib/notion-utils/*": ["notion-utils"]
+      "react-notion-x/*": ["react-notion-x"],
+      "notion-client/*": ["lib/notion-client"],
+      "notion-utils/*": ["lib/notion-utils"]
     },
   },
   "exclude": ["node_modules"],

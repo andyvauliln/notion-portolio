@@ -125,6 +125,7 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
           className='tip-top'
         >
           <components.PageLink
+            data-aos="zoom-in-up"
         className={cs(
           'notion-collection-card',
           `notion-collection-card-size-${coverSize}`,
@@ -184,6 +185,7 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
           `notion-collection-card-size-${coverSize}`,
           className
         )}
+            data-aos="zoom-in-up"
         href={mapPageUrl(block.id)}
         {...rest}
       >

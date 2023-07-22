@@ -8,7 +8,6 @@ import {
   getBlockCollectionId
 } from 'notion-utils'
 import * as types from 'notion-types'
-import { translate } from 'lib/translation'
 
 import { PageIcon } from './components/page-icon'
 import { PageTitle } from './components/page-title'
@@ -289,8 +288,7 @@ export const Block: React.FC<BlockProps> = (props) => {
                     )}
                     {(isBlogPost && sourcePropertyId && block.properties?.[sourcePropertyId]) &&
                       <div style={{paddingTop: "1em", paddingBottom: "1em", width: "100%", display:'flex', justifyContent: "end", paddingRight:"0.5em"}} >
-                       <span style={{opacity:0.7, marginRight:5}}>
-                       {translate("tk_source")}
+                        <span style={{ opacity: 0.7, marginRight: 5 }}>
                        </span>
                        &nbsp;
                         <Property

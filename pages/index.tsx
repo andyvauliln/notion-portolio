@@ -3,10 +3,11 @@ import { domain } from 'lib/config'
 import { resolveNotionPage } from 'lib/resolve-notion-page'
 import { NotionPage } from 'components'
 
+
 export const getStaticProps = async () => {
   try {
     const props = await resolveNotionPage(domain)
-    sliceCollection(props);
+    // sliceCollection(props);
 
     return { props, revalidate: 10 }
   } catch (err) {
@@ -20,13 +21,17 @@ export const getStaticProps = async () => {
 
 export default function NotionDomainPage(props) {
   
-  return <NotionPage {...props} />
+  return <>
+
+    <NotionPage {...props} />
+
+  </>
 }
 
-function sliceCollection(props){
-  Object.keys(props.recordMap.collection_query).forEach((r) => {
-    Object.keys(props.recordMap.collection_query[r]).forEach((item) => {
-      props.recordMap.collection_query[r][item].collection_group_results.blockIds = props.recordMap.collection_query[r][item].collection_group_results.blockIds.slice(0, 6)
-    });
-  });
-}
+// function sliceCollection(props){
+//   Object.keys(props.recordMap.collection_query).forEach((r) => {
+//     Object.keys(props.recordMap.collection_query[r]).forEach((item) => {
+//       props.recordMap.collection_query[r][item].collection_group_results.blockIds = props.recordMap.collection_query[r][item].collection_group_results.blockIds.slice(0, 6)
+//     });
+//   });
+// }

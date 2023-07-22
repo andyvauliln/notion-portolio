@@ -30,6 +30,7 @@ export const AssetWrapper: React.FC<{
 
   const figure = (
     <figure
+      data-aos="zoom-in-up"
       className={cs(
         'notion-asset-wrapper',
         `notion-asset-wrapper-${block.type}`,
