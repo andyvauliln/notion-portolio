@@ -41,7 +41,6 @@
     "format-number": "^3.0.0",
     "got": "^12.6.1",
     "isomorphic-unfetch": "^3.1.0",
-    "jotai": "^1.13.1",
     "katex": "^0.15.6",
     "lodash.throttle": "^4.1.1",
     "lqip-modern": "^1.2.0",
