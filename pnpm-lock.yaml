@@ -59,9 +59,6 @@ dependencies:
   isomorphic-unfetch:
     specifier: ^3.1.0
     version: 3.1.0
-  jotai:
-    specifier: ^1.13.1
-    version: 1.13.1(@babel/core@7.22.9)(react@18.2.0)
   katex:
     specifier: ^0.15.6
     version: 0.15.6
@@ -2794,50 +2791,6 @@ packages:
     resolution: {integrity: sha512-oVhqoRDaBXf7sjkll95LHVS6Myyyb1zaunVwk4Z0+WPSW4gjS0pl01zYKHScTuyEhQsFxV5L4DR5r+YqSyqyyg==}
     hasBin: true
     dev: true
-
-  /jotai@1.13.1(@babel/core@7.22.9)(react@18.2.0):
-    resolution: {integrity: sha512-RUmH1S4vLsG3V6fbGlKzGJnLrDcC/HNb5gH2AeA9DzuJknoVxSGvvg8OBB7lke+gDc4oXmdVsaKn/xDUhWZ0vw==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      '@babel/core': '*'
-      '@babel/template': '*'
-      jotai-devtools: '*'
-      jotai-immer: '*'
-      jotai-optics: '*'
-      jotai-redux: '*'
-      jotai-tanstack-query: '*'
-      jotai-urql: '*'
-      jotai-valtio: '*'
-      jotai-xstate: '*'
-      jotai-zustand: '*'
-      react: '>=16.8'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-      '@babel/template':
-        optional: true
-      jotai-devtools:
-        optional: true
-      jotai-immer:
-        optional: true
-      jotai-optics:
-        optional: true
-      jotai-redux:
-        optional: true
-      jotai-tanstack-query:
-        optional: true
-      jotai-urql:
-        optional: true
-      jotai-valtio:
-        optional: true
-      jotai-xstate:
-        optional: true
-      jotai-zustand:
-        optional: true
-    dependencies:
-      '@babel/core': 7.22.9
-      react: 18.2.0
-    dev: false
 
   /js-cookie@2.2.1:
     resolution: {integrity: sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==}
