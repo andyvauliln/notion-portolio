@@ -57,15 +57,13 @@ function Gallery({ blockIds, collectionView, collection }) {
   } = collectionView.format || {}
 
   return (
-    <div className='notion-gallery'>
-      <div className='notion-gallery-view'>
+    <div className='self-center'>
+      <div className='relative'>
         <div
-          className={cs(
-            'notion-gallery-grid',
-            `notion-gallery-grid-size-${gallery_cover_size}`
-          )}
+          className='grid gap-6 md:gap-6vmin lg:grid-cols-3 min-h-300px'
+
         >
-          {(blockIds && blockIds.length )? blockIds.map((blockId) => {
+          {(blockIds && blockIds.length) ? blockIds.map((blockId) => {
             const block = recordMap.block[blockId]?.value as PageBlock
             if (!block) return null
 
@@ -80,8 +78,10 @@ function Gallery({ blockIds, collectionView, collection }) {
                 key={blockId}
               />
             )
-          }):
-          <div style={{width:100, position: "absolute", right: "calc(50% - 50px)", top: "calc(50% - 10px)", textAlign:"center", fontSize: "20px", fontWeight: "bold", opacity: 0.7 }}>No Result</div>
+          }) :
+            <div className="flex items-center justify-center h-[300px]">
+              <div className="text-center text-xl font-bold opacity-70">No Result</div>
+            </div>
           }
         </div>
       </div>

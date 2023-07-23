@@ -3,7 +3,7 @@ import { IoSunnyOutline } from '@react-icons/all-files/io5/IoSunnyOutline'
 import cs from 'classnames'
 import * as types from 'notion-types'
 import * as React from 'react'
-import { useNotionContext } from 'react-notion-x'
+import { useNotionContext } from 'components/react-notion-x'
 import Logo from './Logo'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -52,9 +52,9 @@ export const Header = () => {
       <header data-aos="fade-in" data-aos-duration="1000" style={{ backgroundImage: "radial-gradient(circle,rgba(16 18 27 / 30%), #27272a" }} className=" bg-zinc-800 fixed top-4 h-14 shadow-bottom left-0 right-0 z-10 shadow-zinc-900">
         <div className="mx-auto flex h-full items-center px-4 xl:container">
           <div className="mr-5 flex shrink-0 items-center">
-            {/* <Link href="/">
+            {/* <Link href="/"> */}
               <Logo />
-            </Link> */}
+            {/* </Link> */}
           </div>
           <ul className="ml-auto h-full  hidden sm:flex items-center">
             <li
@@ -130,42 +130,3 @@ export const Header = () => {
     </>
   )
 }
-{/* <header className='notion-header'>
-  <div className='notion-nav-header'>
-    <Breadcrumbs block={block} rootOnly={true} />
-    <Logo />
-
-    <div className='notion-nav-header-rhs breadcrumbs'>
-      {navigationLinks
-        ?.map((link, index) => {
-          if (!link.pageId && !link.url) {
-            return null
-          }
-
-          if (link.pageId) {
-            return (
-              <components.PageLink
-                href={mapPageUrl(link.pageId)}
-                key={index}
-                className={cs(styles.navLink, 'breadcrumb', 'button')}
-              >
-                {link.title}
-              </components.PageLink>
-            )
-          } else {
-            return (
-              <components.Link
-                href={link.url}
-                key={index}
-                className={cs(styles.navLink, 'breadcrumb', 'button')}
-              >
-                {link.title}
-              </components.Link>
-            )
-          }
-        })
-        .filter(Boolean)}
-      <ToggleThemeButton />
-    </div>
-  </div>
-</header> */}

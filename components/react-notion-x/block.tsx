@@ -24,6 +24,7 @@ import { Text } from './components/text'
 import { SyncPointerBlock } from './components/sync-pointer-block'
 import { AssetWrapper } from './components/asset-wrapper'
 import { EOI } from './components/eoi'
+import { Collection } from './third-party/collection'
 
 interface BlockProps {
   block: types.Block
@@ -70,6 +71,9 @@ export const Block: React.FC<BlockProps> = (props) => {
   } = ctx
 
   const [activeSection, setActiveSection] = React.useState(null)
+
+  console.log(recordMap);
+
 
   const {
     block,
@@ -146,25 +150,25 @@ export const Block: React.FC<BlockProps> = (props) => {
             showTableOfContents && toc.length >= minTableOfContentsItems
           const hasAside = (hasToc || pageAside) && !page_full_width
           const hasPageCover = pageCover || page_cover
-          const isBlogPost = block?.type === 'page' && block?.parent_table === 'collection'
-          let datePropertyId = null;
-          let tagsPropertyId = null;
-          let sourcePropertyId = null;
-          let collectionId = null;
-          let collection = null;
-          if (isBlogPost) {
-            collectionId = block.parent_id
-            collection = recordMap.collection[collectionId]?.value
-            sourcePropertyId = collection.schema && Object.keys(collection.schema).find(
-              (key) => collection.schema[key]?.name?.toLowerCase() === "source"
-            )
-            datePropertyId = collection.schema && Object.keys(collection.schema).find(
-              (key) => collection.schema[key]?.name?.toLowerCase() === "post date"
-            )
-            tagsPropertyId = collection.schema && Object.keys(collection.schema).find(
-              (key) => collection.schema[key]?.name?.toLowerCase() === "tags"
-            )
-          }
+          // const isBlogPost = block?.type === 'page' && block?.parent_table === 'collection'
+          // let datePropertyId = null;
+          // let tagsPropertyId = null;
+          // let sourcePropertyId = null;
+          // let collectionId = null;
+          // let collection = null;
+          // if (isBlogPost) {
+          //   collectionId = block.parent_id
+          //   collection = recordMap.collection[collectionId]?.value
+          //   sourcePropertyId = collection.schema && Object.keys(collection.schema).find(
+          //     (key) => collection.schema[key]?.name?.toLowerCase() === "source"
+          //   )
+          //   datePropertyId = collection.schema && Object.keys(collection.schema).find(
+          //     (key) => collection.schema[key]?.name?.toLowerCase() === "post date"
+          //   )
+          //   tagsPropertyId = collection.schema && Object.keys(collection.schema).find(
+          //     (key) => collection.schema[key]?.name?.toLowerCase() === "tags"
+          //   )
+          // }
 
 
           return (
@@ -180,8 +184,8 @@ export const Block: React.FC<BlockProps> = (props) => {
               <div className='notion-viewport' />
 
               <div className='notion-frame'>
-                {!disableHeader && <components.Header block={block} />}
-                {header}
+                {/* {!disableHeader && <components.Header block={block} />}
+                {header} */}
 
                 <div className='notion-page-scroller'>
                   {hasPageCover &&
@@ -217,7 +221,7 @@ export const Block: React.FC<BlockProps> = (props) => {
                       bodyClassName
                     )}
                   >
-                    {page_icon && (
+                    {/* {page_icon && (
                       <PageIcon
                         block={block}
                         defaultIcon={defaultPageIcon}
@@ -226,14 +230,13 @@ export const Block: React.FC<BlockProps> = (props) => {
                     )}
 
                     {pageHeader}
-                      {console.log(pageTitle, page_icon, hasPageCover, pageCover, "pageTitle")}
                     <h1 className='notion-title'>
                       {pageTitle ?? (
                         <Text value={properties?.title} block={block} />
                       )}
-                    </h1>
+                    </h1> */}
 
-                    {(isBlogPost && tagsPropertyId && block.properties?.[tagsPropertyId]) &&
+                    {/* {(isBlogPost && tagsPropertyId && block.properties?.[tagsPropertyId]) &&
                       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
                         <Property
                           schema={collection.schema[tagsPropertyId]}
@@ -254,13 +257,17 @@ export const Block: React.FC<BlockProps> = (props) => {
                           collection={collection}
                         />
                       </div>
-                    }
-
+                    } */}
+                    {console.log(block.content[0])}
                     {(block.type === 'collection_view_page' ||
-                      (block.type === 'page' &&
-                        block.parent_table === 'collection')) && (
-                        <components.Collection block={block} ctx={ctx} />
+                      (block.type === 'page' && block.parent_table === 'collection')) && (
+                        <Collection block={block} ctx={ctx} />
                       )}
+
+                    {/* {(recordMap.block[block.content[0]] && recordMap.block[block.content[0]].value.type === "collection_view") && (
+                      <Collection block={recordMap.block[block.content[0]].value} ctx={ctx} />
+                    )} */}
+
 
                     {block.type !== 'collection_view_page' && (
                       <div
@@ -274,7 +281,7 @@ export const Block: React.FC<BlockProps> = (props) => {
                           {children}
                         </article>
 
-                        {hasAside && (
+                        {/* {hasAside && (
                           <PageAside
                             toc={toc}
                             activeSection={activeSection}
@@ -283,10 +290,10 @@ export const Block: React.FC<BlockProps> = (props) => {
                             hasAside={hasAside}
                             pageAside={pageAside}
                           />
-                        )}
+                        )} */}
                       </div>
                     )}
-                    {(isBlogPost && sourcePropertyId && block.properties?.[sourcePropertyId]) &&
+                    {/* {(isBlogPost && sourcePropertyId && block.properties?.[sourcePropertyId]) &&
                       <div style={{paddingTop: "1em", paddingBottom: "1em", width: "100%", display:'flex', justifyContent: "end", paddingRight:"0.5em"}} >
                         <span style={{ opacity: 0.7, marginRight: 5 }}>
                        </span>
@@ -305,10 +312,10 @@ export const Block: React.FC<BlockProps> = (props) => {
                           collection={collection}
                         />
                       </div>}
-                    {pageFooter}
+                    {pageFooter} */}
                   </main>
 
-                  {footer}
+                  {/* {footer} */}
                 </div>
               </div>
             </div>
@@ -349,7 +356,7 @@ export const Block: React.FC<BlockProps> = (props) => {
         return (
           <components.PageLink
             className={cs(
-              'notion-page-link',
+              'flex text-fuchsia-600 w-full h-8 mx-1 hover:font-extrabold',
               blockColor && `notion-${blockColor}`,
               blockId
             )}
@@ -632,7 +639,7 @@ export const Block: React.FC<BlockProps> = (props) => {
 
     case 'collection_view':
       return (
-        <components.Collection block={block} className={blockId} ctx={ctx} />
+        <Collection block={block} className={blockId} ctx={ctx} />
       )
 
     case 'callout':

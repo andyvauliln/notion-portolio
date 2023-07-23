@@ -1,9 +1,8 @@
-// global styles shared across the entire site
-import 'styles/global.css'
-
 // core styles shared by all of react-notion-x (required)
-import 'react-notion-x'
+import '../components/react-notion-x/styles.css'
 
+// global styles shared across the entire site
+import '../styles/global.css'
 // used for rendering equations (optional)
 import 'katex/dist/katex.min.css'
 
@@ -14,10 +13,13 @@ import 'prismjs/themes/prism-coy.css'
 // import 'prismjs/themes/prism-okaidia.css'
 
 // global style overrides for notion
-import 'styles/notion.css'
+//import '../styles/notion.css'
 
 // global style overrides for prism theme (optional)
 import 'styles/prism-theme.css'
+
+// animation styles
+import 'aos/dist/aos.css';
 
 import * as React from 'react'
 //import * as Fathom from 'fathom-client'
@@ -25,7 +27,7 @@ import type { AppProps } from 'next/app'
 import { Footer } from 'components/Footer'
 import { Header } from 'components/Header'
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+
 //import { useRouter } from 'next/router'
 // import posthog from 'posthog-js'
 

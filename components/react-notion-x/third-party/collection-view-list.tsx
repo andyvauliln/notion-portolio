@@ -58,7 +58,7 @@ function List({ blockIds, collection, collectionView }) {
 
             return (
               <components.PageLink
-                className='notion-list-item notion-page-link'
+                className='notion-list-item flex text-fuchsia-600 w-full h-8 mx-1 hover:font-extrabold'
                 href={mapPageUrl(block.id)}
                 key={blockId}
               >

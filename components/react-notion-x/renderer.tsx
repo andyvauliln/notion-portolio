@@ -74,43 +74,43 @@ export const NotionRenderer: React.FC<{
   defaultPageCoverPosition,
   ...rest
 }) => {
-  const zoom = React.useMemo(
-    () =>
-      typeof window !== 'undefined' &&
-      mediumZoom({
-        background: 'rgba(0, 0, 0, 0.8)',
-        minZoomScale: 2.0,
-        margin: getMediumZoomMargin()
-      }),
-    []
-  )  
+    const zoom = React.useMemo(
+      () =>
+        typeof window !== 'undefined' &&
+        mediumZoom({
+          background: 'rgba(0, 0, 0, 0.8)',
+          minZoomScale: 2.0,
+          margin: getMediumZoomMargin()
+        }),
+      []
+    )
 
-  return (
-    <NotionContextProvider
-      components={components}
-      recordMap={recordMap}
-      mapPageUrl={mapPageUrl}
-      mapImageUrl={mapImageUrl}
-      searchNotion={searchNotion}
-      fullPage={fullPage}
-      rootPageId={rootPageId}
-      rootDomain={rootDomain}
-      darkMode={darkMode}
-      previewImages={previewImages}
-      forceCustomImages={forceCustomImages}
-      showCollectionViewDropdown={showCollectionViewDropdown}
-      linkTableTitleProperties={linkTableTitleProperties}
-      showTableOfContents={showTableOfContents}
-      minTableOfContentsItems={minTableOfContentsItems}
-      defaultPageIcon={defaultPageIcon}
-      defaultPageCover={defaultPageCover}
-      defaultPageCoverPosition={defaultPageCoverPosition}
-      zoom={zoom}
-    >
-      <NotionBlockRenderer {...rest} />
-    </NotionContextProvider>
-  )
-}
+    return (
+      <NotionContextProvider
+        components={components}
+        recordMap={recordMap}
+        mapPageUrl={mapPageUrl}
+        mapImageUrl={mapImageUrl}
+        searchNotion={searchNotion}
+        fullPage={fullPage}
+        rootPageId={rootPageId}
+        rootDomain={rootDomain}
+        darkMode={darkMode}
+        previewImages={previewImages}
+        forceCustomImages={forceCustomImages}
+        showCollectionViewDropdown={showCollectionViewDropdown}
+        linkTableTitleProperties={linkTableTitleProperties}
+        showTableOfContents={showTableOfContents}
+        minTableOfContentsItems={minTableOfContentsItems}
+        defaultPageIcon={defaultPageIcon}
+        defaultPageCover={defaultPageCover}
+        defaultPageCoverPosition={defaultPageCoverPosition}
+        zoom={zoom}
+      >
+        <NotionBlockRenderer {...rest} />
+      </NotionContextProvider>
+    )
+  }
 
 export const NotionBlockRenderer: React.FC<{
   className?: string
@@ -127,6 +127,10 @@ export const NotionBlockRenderer: React.FC<{
   const id = blockId || Object.keys(recordMap.block)[0]
   const block = recordMap.block[id]?.value
 
+  console.log('id', id);
+  console.log('block', block);
+
+
   if (!block) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn('missing block', blockId)
@@ -137,14 +141,16 @@ export const NotionBlockRenderer: React.FC<{
 
   return (
     <Block key={id} level={level} block={block} {...props}>
-      {block?.content?.map((contentBlockId) => (
-        <NotionBlockRenderer
+      {block?.content?.map((contentBlockId) => {
+        console.log(contentBlockId);
+
+        return <NotionBlockRenderer
           key={contentBlockId}
           blockId={contentBlockId}
           level={level + 1}
           {...props}
         />
-      ))}
+      })}
     </Block>
   )
 }

@@ -6,12 +6,14 @@ import { cs } from '../utils'
 import { useNotionContext } from '../context'
 import { Text } from './text'
 import { PageIcon } from './page-icon'
+import { cn } from '@utils'
 
 export const PageTitleImpl: React.FC<{
   block: Block
   className?: string
   defaultIcon?: string
-}> = ({ block, className, defaultIcon, ...rest }) => {
+  hideIcon?: bool
+}> = ({ block, className, defaultIcon, hideIcon = false, ...rest }) => {
   const { recordMap } = useNotionContext()
 
   if (!block) return null
@@ -28,14 +30,14 @@ export const PageTitleImpl: React.FC<{
     const titleDecoration: Decoration[] = [[title]]
 
     return (
-      <span className={cs('notion-page-title', className)} {...rest}>
-        <PageIcon
+      <span className={cn('flex w-full items-center', className)} {...rest}>
+        {!hideIcon && <PageIcon
           block={block}
           defaultIcon={defaultIcon}
-          className='notion-page-title-icon'
-        />
+          className='flex items-center justify-center h-5 w-5 shrink-0'
+        />}
 
-        <span className='notion-page-title-text'>
+        <span className='relative whitespace-nowrap overflow-hidden text-ellipsis font-bold line-clamp-3'>
           <Text value={titleDecoration} block={block} />
         </span>
       </span>
@@ -47,14 +49,14 @@ export const PageTitleImpl: React.FC<{
   }
 
   return (
-    <span className={cs('notion-page-title', className)} {...rest}>
-      <PageIcon
+    <span className={cn('flex w-full items-center', className)} {...rest}>
+      {!hideIcon && <PageIcon
         block={block}
         defaultIcon={defaultIcon}
-        className='notion-page-title-icon'
-      />
+        className='flex items-center justify-center h-5 w-5 shrink-0'
+      />}
 
-      <span className='notion-page-title-text'>
+      <span className='relative whitespace-nowrap overflow-hidden text-ellipsis font-bold'>
         <Text value={block.properties?.title} block={block} />
       </span>
     </span>

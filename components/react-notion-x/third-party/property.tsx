@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as types from 'notion-types'
 import formatNumber from 'format-number'
 import format from 'date-fns/format/index.js'
+import { cn } from '@utils'
 
 import { cs } from '../utils'
 import { useNotionContext } from '../context'
@@ -104,10 +105,12 @@ export const PropertyImpl: React.FC<IPropertyProps> = (props) => {
   const renderTitleValue = React.useMemo(
     () =>
       function FormulaTitle() {
+        console.log(linkToTitlePage, block);
+
         if (block && linkToTitlePage) {
           return (
             <components.PageLink
-              className={cs('notion-page-link')}
+              className="flex text-blue-600 w-full h-8 mx-1 font-bold"
               href={mapPageUrl(block.id)}
             >
               <PageTitle block={block} />

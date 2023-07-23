@@ -9,7 +9,7 @@ import BodyClassName from 'react-body-classname'
 import { useSearchParam } from 'react-use'
 
 // core notion renderer
-import { NotionRenderer } from 'react-notion-x'
+import { NotionRenderer } from 'components/react-notion-x'
 
 // utils
 import * as config from 'lib/config'
@@ -78,7 +78,7 @@ import styles from './styles.module.css'
 // )
 
 const Collection = dynamic(() =>
-  import('react-notion-x').then(
+  import('components/react-notion-x').then(
     (m) => m.Collection
   )
 )
@@ -166,12 +166,12 @@ export const NotionPage: React.FC<types.PageProps> = ({
       nextImage: Image,
       nextLink: Link,
       // Code,
-      Collection,
+      // Collection,
       // Equation,
       // Pdf,
       // Modal,
       // Tweet,
-      Header: HeaderMock,
+      // Header: HeaderMock,
       // propertyLastEditedTimeValue,
       // propertyTextValue,
       // propertyDateValue

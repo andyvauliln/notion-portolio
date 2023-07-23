@@ -56,6 +56,7 @@ export const Collection: React.FC<{
     if (block.parent_table !== 'collection') {
       return null
     }
+    console.log(block);
 
     return (
       <NotionContextProvider {...context}>
@@ -69,6 +70,7 @@ export const Collection: React.FC<{
       </NotionContextProvider>
     )
   } else {
+
     return (
       <NotionContextProvider {...context}>
         <CollectionViewBlock block={block} className={className} />
@@ -89,15 +91,15 @@ const CollectionViewBlock: React.FC<{
     collectionViewId: defaultCollectionViewId
   })
 
-  const collectionViewId = (isMounted && viewIds.find((id) => id === collectionState.collectionViewId)) ||defaultCollectionViewId
+  const collectionViewId = (isMounted && viewIds.find((id) => id === collectionState.collectionViewId)) || defaultCollectionViewId
 
   const collectionView = recordMap.collection_view[collectionViewId]?.value
   const collectionId = collectionView.format?.collection_pointer?.id || block.collection_id || block.format?.collection_pointer?.id
   // getBlockCollectionId(block, recordMap)
-  
+
 
   const collection = recordMap.collection[collectionId]?.value
- 
+
   const collectionData =
     recordMap.collection_query[collectionId]?.[collectionViewId]
   const parentPage = getBlockParentPage(block, recordMap)
@@ -214,22 +216,10 @@ const CollectionViewBlock: React.FC<{
   }
 
   return (
-    <div className={cs('notion-collection', className)}>
-      <div className='notion-collection-header'>
-        {title && (
-          <div className='notion-collection-header-title'>
-            <PageIcon
-              block={block}
-              className='notion-page-title-icon'
-              hideDefaultIcon
-            />
-
-            {title}
-          </div>
-        )}
-
+    <div className={cs('self-center w-full', className)}>
+      <div className='h-auto px-2 py-4'>
         {viewIds.length > 1 && showCollectionViewDropdown && (
-          <CollectionViewDropdownMenu
+          <CollectionViewTab
             collectionView={collectionView}
             collectionViewId={collectionViewId}
             viewIds={viewIds}
@@ -249,7 +239,7 @@ const CollectionViewBlock: React.FC<{
   )
 }
 
-const CollectionViewDropdownMenu: React.FC<{
+const CollectionViewTab: React.FC<{
   collectionViewId: string
   collectionView: types.CollectionView
   viewIds: string[]
@@ -258,15 +248,15 @@ const CollectionViewDropdownMenu: React.FC<{
   const { recordMap } = useNotionContext()
 
   return (
-    <div className='notion-collection-veiw-content'>
+    <div className='flex flex-wrap justify-center w-full'>
       {viewIds.map((viewId) => (
         <div
           key={viewId}
           onClick={() => onChangeView(viewId)}
           className={cs(
-            'notion-collection-view-content-item',
-            collectionViewId === viewId &&
-            'notion-collection-view-dropdown-content-item-active'
+            'cursor-pointer px-1 py-2 hover:text-fuchsia-600 hover:text-lg hover:font-bold hover:text-shadow shadow-fuchsia-900 ',
+            collectionViewId === viewId ?
+              'text-fuchsia-600 text-shadow shadow-fuchsia-900 text-lg font-bold' : "text-zinc-500"
           )}
         >
           <CollectionViewColumnDesc
@@ -276,45 +266,6 @@ const CollectionViewDropdownMenu: React.FC<{
       ))}
     </div>
   )
-}
-
-{
-  /* <DropdownMenu.Root>
-<DropdownMenu.Trigger className='notion-collection-view-dropdown'>
-  <CollectionViewColumnDesc collectionView={collectionView}>
-    <ChevronDownIcon className='notion-collection-view-dropdown-icon' />
-  </CollectionViewColumnDesc>
-</DropdownMenu.Trigger>
-
-<DropdownMenu.Content className='notion-collection-view-dropdown-content'>
-  <DropdownMenu.RadioGroup
-    value={collectionViewId}
-    onValueChange={onChangeView}
-  >
-    {viewIds.map((viewId) => (
-      <DropdownMenu.RadioItem
-        key={viewId}
-        value={viewId}
-        className={cs(
-          'notion-collection-view-dropdown-content-item',
-          collectionViewId === viewId &&
-            'notion-collection-view-dropdown-content-item-active'
-        )}
-      >
-        {collectionViewId === viewId && (
-          <div className='notion-collection-view-dropdown-content-item-active-icon'>
-            <CheckIcon />
-          </div>
-        )}
-
-        <CollectionViewColumnDesc
-          collectionView={recordMap.collection_view[viewId]?.value}
-        />
-      </DropdownMenu.RadioItem>
-    ))}
-  </DropdownMenu.RadioGroup>
-</DropdownMenu.Content>
-</DropdownMenu.Root> */
 }
 
 const CollectionViewColumnDesc: React.FC<{
@@ -327,13 +278,9 @@ const CollectionViewColumnDesc: React.FC<{
     collectionView.name || `${type[0].toUpperCase()}${type.slice(1)} view`
 
   return (
-    <div className={cs('notion-collection-view-type', className)} {...rest}>
-      <CollectionViewIcon
-        className='notion-collection-view-type-icon'
-        type={type}
-      />
+    <div className={cs('flex items-center', className)} {...rest}>
 
-      <span className='notion-collection-view-type-title'>{name}</span>
+      <span className='overflow-hidden whitespace-nowrap text-ellipsis'>{name}</span>
 
       {children}
     </div>
