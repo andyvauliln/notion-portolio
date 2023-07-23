@@ -37,9 +37,10 @@ export const CollectionCard: React.FC<CollectionCardProps> = ({
       <LazyImage
         src={mapImageUrl(page_cover, block)}
         alt={getTextContent(block.properties?.title)}
+        className='h-full'
         style={{
-          objectFit: coverAspect,
-          // objectPosition: `center ${coverPosition}%`
+          objectFit: "cover",
+          objectPosition: `center ${coverPosition}%`
         }}
       />
     )

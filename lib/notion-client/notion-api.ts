@@ -252,25 +252,25 @@ export class NotionAPI {
       return []
     })
 
-    if (allFileInstances.length > 0) {
-      try {
-        const { signedUrls } = await this.getSignedFileUrls(
-          allFileInstances,
-          gotOptions
-        )
+    // if (allFileInstances.length > 0) {
+    //   try {
+    //     const { signedUrls } = await this.getSignedFileUrls(
+    //       allFileInstances,
+    //       gotOptions
+    //     )
 
-        if (signedUrls.length === allFileInstances.length) {
-          for (let i = 0; i < allFileInstances.length; ++i) {
-            const file = allFileInstances[i]
-            const signedUrl = signedUrls[i]
+    //     if (signedUrls.length === allFileInstances.length) {
+    //       for (let i = 0; i < allFileInstances.length; ++i) {
+    //         const file = allFileInstances[i]
+    //         const signedUrl = signedUrls[i]
 
-            recordMap.signed_urls[file.permissionRecord.id] = signedUrl
-          }
-        }
-      } catch (err) {
-        console.warn('NotionAPI getSignedfileUrls error', err)
-      }
-    }
+    //         recordMap.signed_urls[file.permissionRecord.id] = signedUrl
+    //       }
+    //     }
+    //   } catch (err) {
+    //     console.warn('NotionAPI getSignedfileUrls error', err)
+    //   }
+    // }
   }
 
   public async getPageRaw(
